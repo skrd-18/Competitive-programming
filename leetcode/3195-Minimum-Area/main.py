@@ -27,3 +27,21 @@ def minimumArea(grid: List[List[int]]) -> int:
 # grid = [[0, 0, 0, 0], [0, 0, 1, 0], [0, 1, 0, 1], [1, 0, 0, 0], [0, 0, 0, 0]]
 grid = [[1, 0], [0, 0]]
 print(f"Minimum Area = {minimumArea(grid)}")
+
+
+# Editorial solution for revision and understanding
+# class Solution:
+#     def minimumArea(self, grid: List[List[int]]) -> int:
+#         n, m = len(grid), len(grid[0])
+#         min_i, max_i = n, 0
+#         min_j, max_j = m, 0
+
+#         for i in range(n):
+#             for j in range(m):
+#                 if grid[i][j] == 1:
+#                     min_i = min(min_i, i) # Only captures the topmost row
+#                     max_i = max(max_i, i) # Calture the bottommost row
+#                     min_j = min(min_j, j)
+#                     max_j = max(max_j, j)
+
+#         return (max_i - min_i + 1) * (max_j - min_j + 1)
