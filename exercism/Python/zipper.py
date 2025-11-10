@@ -3,36 +3,36 @@ import unittest
 
 class Zipper:
     @staticmethod
-    def from_tree(tree):
+    def from_tree(tree: dict[str, dict[str, dict[str, int | None] | int | None] | dict[str, int | None] | int]) -> None:
         pass
 
-    def value(self):
+    def value(self) -> None:
         pass
 
-    def set_value(self):
+    def set_value(self) -> None:
         pass
 
-    def left(self):
+    def left(self) -> None:
         pass
 
-    def set_left(self):
+    def set_left(self) -> None:
         pass
 
-    def right(self):
+    def right(self) -> None:
         pass
 
-    def set_right(self):
+    def set_right(self) -> None:
         pass
 
-    def up(self):
+    def up(self) -> None:
         pass
 
-    def to_tree(self):
+    def to_tree(self) -> None:
         pass
 
 
 class ZipperTest(unittest.TestCase):
-    def test_data_is_retained(self):
+    def test_data_is_retained(self) -> None:
         initial = {
             "value": 1,
             "left": {
@@ -56,7 +56,7 @@ class ZipperTest(unittest.TestCase):
         result = zipper.to_tree()
         self.assertEqual(result, expected)
 
-    def test_left_right_and_value(self):
+    def test_left_right_and_value(self) -> None:
         initial = {
             "value": 1,
             "left": {
@@ -71,7 +71,7 @@ class ZipperTest(unittest.TestCase):
         result = zipper.left().right().value()
         self.assertEqual(result, 3)
 
-    def test_dead_end(self):
+    def test_dead_end(self) -> None:
         initial = {
             "value": 1,
             "left": {
@@ -86,7 +86,7 @@ class ZipperTest(unittest.TestCase):
         result = zipper.left().left()
         self.assertIsNone(result)
 
-    def test_tree_from_deep_focus(self):
+    def test_tree_from_deep_focus(self) -> None:
         initial = {
             "value": 1,
             "left": {
@@ -110,7 +110,7 @@ class ZipperTest(unittest.TestCase):
         result = zipper.left().right().to_tree()
         self.assertEqual(result, expected)
 
-    def test_traversing_up_from_top(self):
+    def test_traversing_up_from_top(self) -> None:
         initial = {
             "value": 1,
             "left": {
@@ -125,7 +125,7 @@ class ZipperTest(unittest.TestCase):
         result = zipper.up()
         self.assertIsNone(result)
 
-    def test_left_right_and_up(self):
+    def test_left_right_and_up(self) -> None:
         initial = {
             "value": 1,
             "left": {
@@ -140,7 +140,7 @@ class ZipperTest(unittest.TestCase):
         result = zipper.left().up().right().up().left().right().value()
         self.assertEqual(result, 3)
 
-    def test_test_ability_to_descend_multiple_levels_and_return(self):
+    def test_test_ability_to_descend_multiple_levels_and_return(self) -> None:
         initial = {
             "value": 1,
             "left": {
@@ -155,7 +155,7 @@ class ZipperTest(unittest.TestCase):
         result = zipper.left().right().up().up().value()
         self.assertEqual(result, 1)
 
-    def test_set_value(self):
+    def test_set_value(self) -> None:
         initial = {
             "value": 1,
             "left": {
@@ -179,7 +179,7 @@ class ZipperTest(unittest.TestCase):
         result = zipper.left().set_value(5).to_tree()
         self.assertEqual(result, expected)
 
-    def test_set_value_after_traversing_up(self):
+    def test_set_value_after_traversing_up(self) -> None:
         initial = {
             "value": 1,
             "left": {
@@ -203,7 +203,7 @@ class ZipperTest(unittest.TestCase):
         result = zipper.left().right().up().set_value(5).to_tree()
         self.assertEqual(result, expected)
 
-    def test_set_left_with_leaf(self):
+    def test_set_left_with_leaf(self) -> None:
         initial = {
             "value": 1,
             "left": {
@@ -229,7 +229,7 @@ class ZipperTest(unittest.TestCase):
         )
         self.assertEqual(result, expected)
 
-    def test_set_right_with_null(self):
+    def test_set_right_with_null(self) -> None:
         initial = {
             "value": 1,
             "left": {
@@ -249,7 +249,7 @@ class ZipperTest(unittest.TestCase):
         result = zipper.left().set_right(None).to_tree()
         self.assertEqual(result, expected)
 
-    def test_set_right_with_subtree(self):
+    def test_set_right_with_subtree(self) -> None:
         initial = {
             "value": 1,
             "left": {
@@ -283,7 +283,7 @@ class ZipperTest(unittest.TestCase):
         ).to_tree()
         self.assertEqual(result, expected)
 
-    def test_set_value_on_deep_focus(self):
+    def test_set_value_on_deep_focus(self) -> None:
         initial = {
             "value": 1,
             "left": {
@@ -307,7 +307,7 @@ class ZipperTest(unittest.TestCase):
         result = zipper.left().right().set_value(5).to_tree()
         self.assertEqual(result, expected)
 
-    def test_different_paths_to_same_zipper(self):
+    def test_different_paths_to_same_zipper(self) -> None:
         initial = {
             "value": 1,
             "left": {

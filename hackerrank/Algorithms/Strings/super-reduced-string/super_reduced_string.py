@@ -1,4 +1,4 @@
-def super_reduced_string(s):
+def super_reduced_string(s: str) -> str:
     m = list(s)
     c = 0
     while c < len(m)-1:

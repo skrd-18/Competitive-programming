@@ -18,7 +18,7 @@ def findMedianSortedArrays(A, B):
         return (kth(A, B, l // 2) + kth(A, B, l // 2 - 1)) / 2.
 
 
-def kth(a, b, k):  # a = A, b = B, k = l // 2
+def kth(a, b, k: int):  # a = A, b = B, k = l // 2
     if not a:
         return b[k]
     if not b:

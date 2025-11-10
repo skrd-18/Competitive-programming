@@ -20,7 +20,7 @@ import sys
 # 3. Make sure the recursive case can be eventually reduced to base case
 
 
-def powerSum(x, n):
+def powerSum(x: int, n: int) -> None:
     dp = [1] + [0] * x
     for i in range(1, int(pow(x, 1 / n)) + 1):
         u = i ** n

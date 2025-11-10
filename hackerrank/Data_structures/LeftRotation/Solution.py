@@ -16,7 +16,7 @@ import sys
 #
 
 
-def rotateLeft(d, arr):
+def rotateLeft(d: int, arr: list[int]):
     for index in range(d):
         arr.append(arr.pop(0))
 

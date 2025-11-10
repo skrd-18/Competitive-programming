@@ -15,7 +15,7 @@ class Solution:
 
 
 def binary_search_2(key, seq):
-    def helper(low, high):
+    def helper(low: int, high: int):
         if low > high:
             return False
         mid = (low + high) // 2

@@ -1,4 +1,4 @@
-def findNextCellToFill(grid, i, j):
+def findNextCellToFill(grid, i, j) -> tuple[int, int]:
     for x in range(i, 9):
         for y in range(j, 9):
             if grid[x][y] == 0:
@@ -10,7 +10,7 @@ def findNextCellToFill(grid, i, j):
     return -1, -1  # no cell is found
 
 
-def isValid(grid, i, j, e):
+def isValid(grid, i: int, j: int, e: int) -> bool:
     rowOk = all([e != grid[i][x] for x in range(9)])
     if rowOk:  # if True
         columnOk = all([e != grid[x][j] for x in range(9)])
@@ -26,7 +26,7 @@ def isValid(grid, i, j, e):
     return False
 
 
-def solveSudoku(grid, i=0, j=0):  # starting positions i=0, j=0
+def solveSudoku(grid, i: int=0, j: int=0) -> bool:  # starting positions i=0, j=0
     i, j = findNextCellToFill(grid, i, j)
     if i == -1:
         return True

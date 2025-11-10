@@ -17,7 +17,7 @@ class Solution:
                 left = mid + 1
         return left
 
-    def isBadVersion(mid):
+    def isBadVersion(mid: int) -> None:
         pass
 
 

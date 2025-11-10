@@ -58,7 +58,7 @@ def move_left(numbers):
     return new_numbers
 
 
-def transpose(numbers):
+def transpose(numbers) -> list[list[int]]:
     arr = [[0 for i in range(4)] for j in range(4)]
     for row in range(len(numbers[0])):
         for col in range(len(numbers[0])):

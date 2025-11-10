@@ -6,7 +6,7 @@ for _ in range(4):
     test.append(list(input()))
 
 ## Wishful thinking
-def manhattan_distance(i, j, m, n):
+def manhattan_distance(i: int, j: int, m: int, n: int):
     return abs(i - m) + abs(j - n)
 
 

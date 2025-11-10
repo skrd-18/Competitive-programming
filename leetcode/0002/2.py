@@ -5,15 +5,15 @@ from typing import List
 
 
 class ListNode:
-    def __init__(self, val=0, next=None):
+    def __init__(self, val: int=0, next=None) -> None:
         self.val = val
         self.next = next
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return "ListNode(val=" + str(self.val) + ", next={" + str(self.next) + "})"
 
 
-def list_to_LL(arr):
+def list_to_LL(arr) -> ListNode | None:
     if len(arr) < 1:
         return None
 

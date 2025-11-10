@@ -80,7 +80,7 @@
 # Searches an element key in a pivoted sorted array arrp[] of size n'''
 
 
-def pivotedBinarySearch(arr, n, key):
+def pivotedBinarySearch(arr: list[int], n: int, key: int):
 
     pivot = findPivot(arr, 0, n-1)  # arr, low, high
 
@@ -100,7 +100,7 @@ def pivotedBinarySearch(arr, n, key):
 
 
 # Function to get pivot. For array, 3, 4, 5, 6, 1, 2 it returns 3 (index of 6)
-def findPivot(arr, low, high):
+def findPivot(arr, low: int, high: int):
 
     # base cases
     if high < low:

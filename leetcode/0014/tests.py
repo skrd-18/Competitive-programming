@@ -5,7 +5,7 @@ import main
 
 class TestStringMethods(unittest.TestCase):
 
-    def test_longestCommonPrefix(self):
+    def test_longestCommonPrefix(self) -> None:
         self.assertEqual(main.longestCommonPrefix(["flower", "flow", "flight"]), "fl")
         self.assertEqual(main.longestCommonPrefix(["dog", "racecar", "car"]), "")
         self.assertEqual(main.longestCommonPrefix(["", ""]), "")
@@ -14,7 +14,7 @@ class TestStringMethods(unittest.TestCase):
         self.assertEqual(main.longestCommonPrefix(["a"]), "a")
         self.assertEqual(main.longestCommonPrefix(["ab", "a"]), "a")
 
-    def test_longestCommonPrefix2(self):
+    def test_longestCommonPrefix2(self) -> None:
         self.assertEqual(main.longestCommonPrefix2(["flower", "flow", "flight"]), "fl")
         self.assertEqual(main.longestCommonPrefix2(["dog", "racecar", "car"]), "")
         self.assertEqual(main.longestCommonPrefix2(["a"]), "a")

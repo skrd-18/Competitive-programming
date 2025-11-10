@@ -8,17 +8,17 @@ import sys
 
 
 class SinglyLinkedListNode:
-    def __init__(self, node_data):
+    def __init__(self, node_data) -> None:
         self.data = node_data
         self.next = None
 
 
 class SinglyLinkedList:
-    def __init__(self):
+    def __init__(self) -> None:
         self.head = None
         self.tail = None
 
-    def insert_node(self, node_data):
+    def insert_node(self, node_data: int) -> None:
         node = SinglyLinkedListNode(node_data)
 
         if not self.head:
@@ -43,7 +43,7 @@ class SinglyLinkedList:
 #
 
 
-def printLinkedList(head):
+def printLinkedList(head) -> None:
     while head:
         print(head.data)
         head = head.next

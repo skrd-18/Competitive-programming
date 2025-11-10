@@ -1,4 +1,4 @@
-def list_mutability():
+def list_mutability() -> None:
     data = [1,2,3,4]
 
     datum = data * 2

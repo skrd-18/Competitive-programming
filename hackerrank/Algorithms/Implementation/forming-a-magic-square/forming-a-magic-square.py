@@ -1,7 +1,7 @@
 import copy
 
 
-def combinations(arr):
+def combinations(arr: range):
     # Base case
     if len(arr) == 0:
         return [[]]
@@ -33,7 +33,7 @@ def flip_mirror(matrix):
     return (new_matrix)
 
 
-def transpose(matrix):
+def transpose(matrix) -> list[list[int]]:
     new_matrix = [[0 for i in range(len(matrix))]
                   for i in range(len(matrix[0]))]
     for i in range(len(matrix)):
@@ -54,7 +54,7 @@ def calculate_cost(possible_combinations, s):
     return min(total_costs)
 
 
-def formingMagicSquare(s):
+def formingMagicSquare(s: list[list[int]]):
     combs = []
     # Find all possible combinations of 3 numbers that add to 15
     #

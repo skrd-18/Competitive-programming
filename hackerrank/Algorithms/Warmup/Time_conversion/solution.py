@@ -12,7 +12,7 @@ import sys
 #
 
 
-def timeConversion(s):
+def timeConversion(s: str):
     # Write your code here
     if (s[8:]) == "PM":  # PM
         if int(s[0:2]) == 12:  # if it's 12 PM

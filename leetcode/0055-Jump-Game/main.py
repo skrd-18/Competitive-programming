@@ -1,5 +1,5 @@
 # Runtime O(n), O(1) space
-def canJump(nums):
+def canJump(nums) -> bool:
     m = 0
     for i, n in enumerate(nums):
         print(f'i = {i}\n')
@@ -11,7 +11,7 @@ def canJump(nums):
 
 # print(canJump([3,2,1,0,4])
 
-def canJumpBackwards(nums) -> bool:
+def canJumpBackwards(nums: list[int]) -> bool:
     last_position = len(nums)-1
         
     for i in range(len(nums)-2,-1,-1): # Iterate backwards from second to last item until the first item

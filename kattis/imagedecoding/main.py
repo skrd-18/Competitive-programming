@@ -1,6 +1,6 @@
 import sys
 
-def check_columns(image_array):
+def check_columns(image_array) -> bool:
     value_list = []
     value = 0
     for i in range(0, len(image_array)):
@@ -15,7 +15,7 @@ def check_columns(image_array):
         return False
 
 
-def run_length_decoding(rows, image_array):
+def run_length_decoding(rows: int, image_array) -> None:
     error_flag = 0
     current_symbol = ""
     total_columns = 0
@@ -48,7 +48,7 @@ def run_length_decoding(rows, image_array):
         print("Error decoding image")
 
 
-def main():
+def main() -> None:
     first = True  # we have not printed anything yet, so skip the first \n
     while True:
         i = int(input())

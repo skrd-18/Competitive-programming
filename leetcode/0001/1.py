@@ -1,5 +1,5 @@
 class Solution:
-    def twoSum(self, nums, target: int):
+    def twoSum(self, nums: list[int], target: int):
         d = {}
         for i in range(len(nums)):
             j = target - nums[i]

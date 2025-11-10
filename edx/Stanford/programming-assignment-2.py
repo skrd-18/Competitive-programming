@@ -94,7 +94,7 @@ def partitionRight(ar: typing.List[int], left: int, right: int) -> int:
     return i - 1  # Return the pivot's new index
 
 
-def quickSortLeft(ar: typing.List[int], left: int, right: int):
+def quickSortLeft(ar: typing.List[int], left: int, right: int) -> None:
     """
     Sorts the subarray ar[left...right] in-place using Quicksort.
     """

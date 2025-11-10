@@ -14,7 +14,7 @@ p2 = [x, y]
 x, y = map(int, input().split())
 p3 = [x, y]
 
-def calculate_distance(p1, p2):
+def calculate_distance(p1: list[int], p2: list[int]):
     return (p1[0] - p2[0]) ** 2 + (p1[1] - p2[1]) ** 2
 
 ##p1 = [-5, -8]

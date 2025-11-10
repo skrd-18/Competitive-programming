@@ -8,7 +8,7 @@ Functional Programming paradigm
 """
 
 
-def combinations(target, size, exclude):
+def combinations(target: int, size: int, exclude):
     numbers = list(filter(lambda x: x not in exclude, range(1, 10)))
 
     # Invariant 1: Check if the numbers vaariable is correct
@@ -28,43 +28,43 @@ def combinations(target, size, exclude):
 
 
 class KillerSudokuHelperTest(unittest.TestCase):
-    def test_1(self):
+    def test_1(self) -> None:
         self.assertEqual(combinations(1, 1, []), [[1]])
 
-    def test_2(self):
+    def test_2(self) -> None:
         self.assertEqual(combinations(2, 1, []), [[2]])
 
-    def test_3(self):
+    def test_3(self) -> None:
         self.assertEqual(combinations(3, 1, []), [[3]])
 
-    def test_4(self):
+    def test_4(self) -> None:
         self.assertEqual(combinations(4, 1, []), [[4]])
 
-    def test_5(self):
+    def test_5(self) -> None:
         self.assertEqual(combinations(5, 1, []), [[5]])
 
-    def test_6(self):
+    def test_6(self) -> None:
         self.assertEqual(combinations(6, 1, []), [[6]])
 
-    def test_7(self):
+    def test_7(self) -> None:
         self.assertEqual(combinations(7, 1, []), [[7]])
 
-    def test_8(self):
+    def test_8(self) -> None:
         self.assertEqual(combinations(8, 1, []), [[8]])
 
-    def test_9(self):
+    def test_9(self) -> None:
         self.assertEqual(combinations(9, 1, []), [[9]])
 
-    def test_cage_with_sum_45_contains_all_digits_1_9(self):
+    def test_cage_with_sum_45_contains_all_digits_1_9(self) -> None:
         self.assertEqual(combinations(45, 9, []), [[1, 2, 3, 4, 5, 6, 7, 8, 9]])
 
-    def test_cage_with_only_1_possible_combination(self):
+    def test_cage_with_only_1_possible_combination(self) -> None:
         self.assertEqual(combinations(7, 3, []), [[1, 2, 4]])
 
-    def test_cage_with_several_combinations(self):
+    def test_cage_with_several_combinations(self) -> None:
         self.assertEqual(combinations(10, 2, []), [[1, 9], [2, 8], [3, 7], [4, 6]])
 
-    def test_cage_with_several_combinations_that_is_restricted(self):
+    def test_cage_with_several_combinations_that_is_restricted(self) -> None:
         self.assertEqual(combinations(10, 2, [1, 4]), [[2, 8], [3, 7]])
 
 

@@ -1,7 +1,7 @@
 class Solution(object):
     def floodFill(self, image, sr, sc, newColor):
         rows, cols, orig_color = len(image), len(image[0]), image[sr][sc]
-        def traverse(row, col):
+        def traverse(row, col) -> None:
             if (not (0 <= row < rows and 0 <= col < cols)) or image[row][col] != orig_color:
                 return
             image[row][col] = newColor

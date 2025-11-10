@@ -1,13 +1,13 @@
 from functools import cache
 
 
-def print_grid(grid):
+def print_grid(grid) -> None:
     for row in grid:
         print("".join(row))
     print('---')
 
 
-def numIslands(grid):
+def numIslands(grid: list[list[str]]) -> int:
     if not grid:
         return 0
     print('Original Grid')
@@ -23,7 +23,7 @@ def numIslands(grid):
 # Iterate through each of the cell and if it is an island, do dfs to mark all adjacent islands, then increase the counter by 1.
 
 
-def dfs(grid, i, j):
+def dfs(grid, i: int, j: int) -> None:
     # check the boundaries and ensure it is a '1'
     if i < 0 or j < 0 or i >= len(grid) or j >= len(grid[0]) or grid[i][j] != '1':
         return

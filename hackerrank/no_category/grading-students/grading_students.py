@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-def gradingStudents(grades):
+def gradingStudents(grades: list[int]):
     multiples_5 = [i for i in range(101) if i % 5 == 0]
 
 

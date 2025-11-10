@@ -12,7 +12,7 @@ import sys
 # The function accepts INTEGER_ARRAY candles as parameter.
 #
 
-def birthdayCakeCandles(candles):
+def birthdayCakeCandles(candles: list[int]):
     # Write your code here
     return candles.count(max(candles))
 

@@ -1,6 +1,6 @@
 # from collections import defaultdict
 
-def merge_sort(left_subarray_index, right_subarray_index, array):
+def merge_sort(left_subarray_index: int, right_subarray_index: int, array) -> None:
     if left_subarray_index < right_subarray_index:
         middle = (left_subarray_index + right_subarray_index) // 2
         merge_sort(left_subarray_index, middle, array)

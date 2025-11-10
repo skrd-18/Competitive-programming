@@ -8,7 +8,7 @@ class Node:
     left: Optional["Node"] = None
     right: Optional["Node"] = None
 
-    def preorder(self, node=None):
+    def preorder(self, node=None) -> None:
         if node is None:
             node = self  # Start from the current node if no node is passed
 

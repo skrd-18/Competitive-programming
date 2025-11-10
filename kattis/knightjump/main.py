@@ -15,7 +15,7 @@ jth col =>  1 2 3 4
 
 
 class BFS():
-    def __init__(self, matrix, knight, dimension):
+    def __init__(self, matrix, knight, dimension) -> None:
         self.matrix = matrix
         self.knight = knight
         self.dimension = dimension
@@ -44,7 +44,7 @@ class BFS():
         return -1
 
 
-def main():
+def main() -> None:
     # dimension = int(input())
     dimension = 4
     matrix = []

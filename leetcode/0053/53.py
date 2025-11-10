@@ -7,7 +7,7 @@ it is a game of sum, not the elements.'''
 nums = [-2, 1, -3, 4, -1, 2, 1, -5, 4]
 
 
-def Solution(nums):
+def Solution(nums: list[int]):
     for i in range(1, len(nums)):
         if nums[i - 1] > 0:
             nums[i] += nums[i - 1]

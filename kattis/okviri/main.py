@@ -15,7 +15,7 @@ line5 = [""]
 ## Debugging
 line = "ABCD"
 
-def solve(line):
+def solve(line: str) -> None:
     for i in range(len(line)):
         if (i+1) % 3 != 0:
             # pyrefly: ignore  # missing-attribute

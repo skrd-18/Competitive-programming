@@ -2,12 +2,12 @@ from pprint import pprint
 
 
 class BFS():
-    def __init__(self, matrix):
+    def __init__(self, matrix) -> None:
         self.matrix = matrix
         self.neighbours = []
         self.matrix_value = 0
 
-    def find(self):
+    def find(self) -> int | tuple[int, int]:
         queue = []
         queue.append(((0, 0), 0))
 
@@ -32,7 +32,7 @@ class BFS():
         return -1
 
 
-def create_zero_matrix(r, c):
+def create_zero_matrix(r: int, c: int):
     matrix = []
     row = []
     for i in range(r):
@@ -43,7 +43,7 @@ def create_zero_matrix(r, c):
     return matrix
 
 
-def main():
+def main() -> None:
     ##    rows, space, columns = input()
     ##    rows = int(rows)
     ##    columns = int(columns)
