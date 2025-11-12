@@ -7,21 +7,33 @@ G: dict[int, list[int]] = {0: [1, 2], 1: [2], 2: [3], 3: []}
 
 def dfs_reach(
     G: dict[int, list[int]], s: int
-) -> tuple[set[int], dict[int, int | None]]:
+) -> tuple[set[int], dict[int, int | None], dict[int, int], dict[int, int], list[int]]:
     visited: set[int] = set()
     parent: dict[int, Optional[int]] = {s: None}
+    tin: dict[int, int] = {}
+    tout: dict[int, int] = {}
+    time = 0
+    finish_stack: list[int] = []  # decreasing finishing time
 
     def dfs(u: int) -> None:
+        nonlocal time
         # 1) mark u as visited
         visited.add(u)
+        tin[u] = time
+        time += 1
         # 2) for each v in G(u) , if v not visited: dfs(v)
         for v in G[u]:
             if v not in visited:
                 parent[v] = u  # record tree edges u -> v
                 dfs(v)
+        finish_stack.append(u)  # record u when it FINISHES
+        tout[u] = time
+        time += 1
 
-    dfs(s)
-    return visited, parent
+    for u in G:
+        if u not in visited:
+            dfs(u)
+    return visited, parent, tin, tout, finish_stack[::-1]
 
 
 # quick checks
@@ -43,13 +55,20 @@ def reconstruct_path(parent: dict[int, Optional[int]], t: int) -> list[int]:
 
 
 # Try from source 0
-visited, parent = dfs_reach(G, 0)
+visited, parent, tin, tout, finish_stack = dfs_reach(G, 0)
 print("visited:", visited)  # expect {0,1,2,3}
 print("parent:", parent)  # e.g., {0:None, 1:0, 2:0 or 1, 3:2}
 print("path 0->3:", reconstruct_path(parent, 3))  # expect a valid path like [0,2,3]
-
+print("tin = {}".format(tin))
+print("tout= {}".format(tout))
+print("finish_stack = {}".format(finish_stack))
+print("\n")
 # Try from source 1
-visited1, parent1 = dfs_reach(G, 1)
+visited1, parent1, tin, tout, finish_stack = dfs_reach(G, 1)
 print("visited from 1:", visited1)  # expect {1,2,3}
 print("path 1->3:", reconstruct_path(parent1, 3))  # expect [1,2,3]
 print("path 1->0:", reconstruct_path(parent1, 0))  # expect [] (unreachable)
+
+print("tin = {}".format(tin))
+print("tout= {}".format(tout))
+print("finish_stack = {}".format(finish_stack))

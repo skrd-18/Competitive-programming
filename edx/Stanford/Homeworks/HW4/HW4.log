@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2025.10.12)  11 NOV 2025 14:10
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2025.10.12)  12 NOV 2025 02:23
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -238,13 +238,13 @@ L3 programming layer <2024-01-22>
 Here is how much of TeX's memory you used:
  3314 strings out of 474222
  48036 string characters out of 5748732
- 1933975 words of memory out of 5000000
+ 1934975 words of memory out of 5000000
  25559 multiletter control sequences out of 15000+600000
  560076 words of font info for 45 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  57i,11n,65p,765b,277s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb>
-Output written on HW4.pdf (1 page, 82901 bytes).
+Output written on HW4.pdf (1 page, 83802 bytes).
 PDF statistics:
  43 PDF objects out of 1000 (max. 8388607)
  25 compressed objects within 1 object stream
