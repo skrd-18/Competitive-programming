@@ -58,17 +58,7 @@ def reconstruct_path(parent: dict[int, Optional[int]], t: int) -> list[int]:
 visited, parent, tin, tout, finish_stack = dfs_reach(G, 0)
 print("visited:", visited)  # expect {0,1,2,3}
 print("parent:", parent)  # e.g., {0:None, 1:0, 2:0 or 1, 3:2}
-print("path 0->3:", reconstruct_path(parent, 3))  # expect a valid path like [0,2,3]
 print("tin = {}".format(tin))
 print("tout= {}".format(tout))
 print("finish_stack = {}".format(finish_stack))
 print("\n")
-# Try from source 1
-visited1, parent1, tin, tout, finish_stack = dfs_reach(G, 1)
-print("visited from 1:", visited1)  # expect {1,2,3}
-print("path 1->3:", reconstruct_path(parent1, 3))  # expect [1,2,3]
-print("path 1->0:", reconstruct_path(parent1, 0))  # expect [] (unreachable)
-
-print("tin = {}".format(tin))
-print("tout= {}".format(tout))
-print("finish_stack = {}".format(finish_stack))
