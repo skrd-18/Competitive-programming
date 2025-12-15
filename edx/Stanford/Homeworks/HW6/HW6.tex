@@ -1,0 +1,273 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{booktabs} % For nicer tables
+\usepackage{xcolor}
+\usepackage{hyperref}
+
+% Page margins
+\geometry{a4paper, margin=1in}
+
+% Custom commands for math
+\newcommand{\Prob}{\text{Pr}}
+\newcommand{\Expect}{\mathbb{E}}
+\newcommand{\modn}{\pmod{n}}
+
+\title{\textbf{Comprehensive Study Guide: Hashing \& Bloom Filters}}
+\author{Exam Review Notes}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section{The Motivation for Hashing}
+
+To maintain a set $S$ of keys drawn from a large universe $U$, we compare three fundamental data structures. The goal of hashing is to combine the speed of arrays with the space efficiency of linked lists.
+
+\begin{table}[h]
+    \centering
+    \renewcommand{\arraystretch}{1.5}
+    \begin{tabular}{@{}llll@{}}
+        \toprule
+        \textbf{Approach} & \textbf{Space} & \textbf{Time (Lookup)} & \textbf{Trade-off} \\ 
+        \midrule
+        \textbf{Direct Addressing} & $\Theta(|U|)$ & $O(1)$ Worst Case & \textbf{Fast but Impossible Space.} \\
+        (Array) & & & If $U$ is large (e.g., IPv6), memory explodes. \\
+        \midrule
+        \textbf{Linked List} & $\Theta(|S|)$ & $\Theta(|S|)$ Worst Case & \textbf{Space Efficient but Slow.} \\
+        & & & Must scan the entire list to find items. \\
+        \midrule
+        \textbf{Hash Table} & $\Theta(|S|)$ & $O(1)$ Expected & \textbf{The Sweet Spot.} \\
+        & & & Maps huge $U$ to small table size $n$. \\
+        \bottomrule
+    \end{tabular}
+    \caption{Comparison of Data Structures}
+\end{table}
+
+\section{Birthday Paradox}
+Consider $n$ people with random birthdays (assuming 365 days in a year, equally likely, and independent). We want to find the smallest integer $n$ such that the probability of at least two people sharing a birthday is at least 50\%:
+\begin{equation}
+    P(\text{at least one collision}) \ge 0.5
+\end{equation}
+
+\subsection{The Complement Strategy}
+Calculating collisions directly is complex due to the number of possible pairs. It is easier to calculate the complement event: \textbf{all birthdays are unique}.
+\begin{align*}
+    P(\text{shared}) &= 1 - P(\text{all unique}) \\
+    1 - P(\text{unique}) &\ge 0.5 \\
+    P(\text{unique}) &\le 0.5
+\end{align*}
+
+\subsection{Exact Probability Formula}
+We assign birthdays to $n$ people one by one, ensuring no collisions:
+\begin{itemize}
+    \item Person 1: $365/365$ (Any day is fine)
+    \item Person 2: $364/365$ (Must avoid Person 1)
+    \item Person $k$: $(365 - (k-1))/365$ (Must avoid previous $k-1$ people)
+\end{itemize}
+
+The total probability is the product of these independent choices:
+\begin{equation}
+    P(\text{unique}) = 1 \times \frac{364}{365} \times \frac{363}{365} \times \dots \times \frac{365-(n-1)}{365}
+\end{equation}
+
+This can be written compactly using product notation:
+\begin{equation}
+    P(\text{unique}) = \prod_{k=0}^{n-1} \left( \frac{365-k}{365} \right) = \prod_{k=0}^{n-1} \left( 1 - \frac{k}{365} \right)
+\end{equation}
+
+\subsection{Approximation using Taylor Series}
+To solve for $n$, we convert the product into a sum by taking the natural logarithm ($\ln$) of both sides:
+\begin{equation}
+    \ln(P(\text{unique})) = \sum_{k=0}^{n-1} \ln\left(1 - \frac{k}{365}\right)
+\end{equation}
+
+We use the Taylor Series expansion for $\ln(1-x)$ near $x=0$:
+\[ \ln(1-x) = -x - \frac{x^2}{2} - \frac{x^3}{3} - \dots \]
+For small $x$ (where $x = k/365$), we approximate $\ln(1-x) \approx -x$.
+
+Substituting this into our sum:
+\begin{align*}
+    \ln(P(\text{unique})) &\approx \sum_{k=0}^{n-1} \left( -\frac{k}{365} \right) \\
+    &= -\frac{1}{365} \sum_{k=0}^{n-1} k
+\end{align*}
+
+Using the arithmetic series sum formula $\sum_{k=0}^{n-1} k = \frac{n(n-1)}{2}$, we get:
+\begin{equation}
+    \ln(P(\text{unique})) \approx -\frac{1}{365} \cdot \frac{n(n-1)}{2} = -\frac{n(n-1)}{730}
+\end{equation}
+
+Exponentiating both sides gives the approximate probability formula:
+\begin{equation}
+    P(\text{unique}) \approx e^{-\frac{n(n-1)}{730}}
+\end{equation}
+
+\subsection{Solving for $n$}
+We require $P(\text{unique}) \le 0.5$.
+\begin{align*}
+    e^{-\frac{n(n-1)}{730}} &\le 0.5 \\
+    -\frac{n(n-1)}{730} &\le \ln(0.5) \\
+    -\frac{n(n-1)}{730} &\le -0.693 \quad (\text{since } \ln(2) \approx 0.693) \\
+    n(n-1) &\ge 0.693 \times 730 \\
+    n(n-1) &\ge 505.89
+\end{align*}
+
+Approximating $n(n-1) \approx n^2$:
+\begin{align*}
+    n^2 &\approx 506 \\
+    n &\approx \sqrt{506} \approx 22.49
+\end{align*}
+
+Since $n$ must be an integer, we round up:
+\begin{equation}
+    \boxed{n = 23}
+\end{equation}
+
+\section{Modular Arithmetic \& Inverses}
+
+Understanding modular inverses is a prerequisite for the Universal Hashing proof.
+
+\subsection{Modular Inverses}
+An integer $u$ is said to be \textbf{invertible modulo $n$} if there exists an integer $v$ (often written as $u^{-1}$) such that:
+\begin{equation}
+    u \cdot v \equiv 1 \pmod{n}
+\end{equation}
+
+\begin{itemize}
+    \item \textbf{Existence Condition:} An inverse exists \textbf{if and only if} $\gcd(u, n) = 1$.
+    \item \textbf{Prime Modulus Property:} If $n = p$ (a prime number), then every non-zero integer $u \in \{1, \dots, p-1\}$ is invertible. This is because a prime number shares no factors with numbers smaller than itself.
+\end{itemize}
+
+\subsection{Computing Inverses: Extended Euclidean Algorithm (EEA)}
+To find the inverse of $u \modn$, we solve Bézout's Identity: $s \cdot u + t \cdot n = 1$. Reducing this modulo $n$ gives $s \cdot u \equiv 1 \modn$.
+
+\subsubsection*{Example: Find $11^{-1} \pmod{26}$}
+\textbf{Step 1: Forward Pass (Euclidean Division)}
+\begin{align*}
+    26 &= 2 \cdot 11 + 4 \\
+    11 &= 2 \cdot 4 + 3 \\
+    4 &= 1 \cdot 3 + 1 \quad \leftarrow \text{GCD is 1, so inverse exists.}
+\end{align*}
+
+\textbf{Step 2: Backward Pass (Substitution)}
+Express 1 as a linear combination of 11 and 26.
+\begin{align*}
+    1 &= 4 - 1 \cdot 3 \\
+    &= 4 - 1 \cdot (11 - 2 \cdot 4) \quad \text{(Substitute } 3 = 11 - 2 \cdot 4 \text{)} \\
+    &= 3 \cdot 4 - 1 \cdot 11 \\
+    &= 3 \cdot (26 - 2 \cdot 11) - 1 \cdot 11 \quad \text{(Substitute } 4 = 26 - 2 \cdot 11 \text{)} \\
+    &= 3 \cdot 26 - 6 \cdot 11 - 1 \cdot 11 \\
+    &= 3 \cdot 26 - 7 \cdot 11
+\end{align*}
+
+\textbf{Step 3: Result}
+Reducing modulo 26, the term $3 \cdot 26$ becomes 0:
+\begin{align*}
+    -7 \cdot 11 &\equiv 1 \pmod{26} \\
+    -7 &\equiv 19 \pmod{26}
+\end{align*}
+\textbf{Conclusion:} $11^{-1} \equiv 19 \pmod{26}$.
+
+\newpage
+
+\section{Universal Hashing}
+
+\subsection{Definition}
+A family of hash functions $\mathcal{H}$ mapping $U \to \{0, \dots, n-1\}$ is \textbf{universal} if for any two distinct keys $x \neq y$:
+\begin{equation}
+    \Prob_{h \in \mathcal{H}}[h(x) = h(y)] \le \frac{1}{n}
+\end{equation}
+\textit{Note:} Per-key uniformity (probability $1/n$ of hitting a specific bucket) is necessary but \textbf{not sufficient}. We specifically require the \textbf{pairwise collision probability} to be low.
+
+\subsection{Proof: Hashing IP Addresses}
+\textbf{The Setup:}
+\begin{itemize}
+    \item \textbf{Keys:} IP addresses decomposed into 4 parts: $x = (x_1, x_2, x_3, x_4)$ where $x_i \in \{0, \dots, n-1\}$.
+    \item \textbf{Buckets:} A prime number $n$.
+    \item \textbf{Hash Family:} Defined by a random vector $a = (a_1, a_2, a_3, a_4)$ where each $a_i$ is uniform in $\{0, \dots, n-1\}$.
+    \item \textbf{Function:} $h_a(x) = \sum_{i=1}^{4} a_i x_i \pmod{n}$.
+\end{itemize}
+
+\textbf{The Proof:}
+We wish to calculate the probability that distinct keys $x$ and $y$ collide.
+
+\textbf{1. The Collision Equation}
+\begin{align*}
+    h_a(x) &= h_a(y) \\
+    \sum_{i=1}^{4} a_i x_i &\equiv \sum_{i=1}^{4} a_i y_i \pmod{n} \\
+    \sum_{i=1}^{4} a_i (x_i - y_i) &\equiv 0 \pmod{n}
+\end{align*}
+
+\textbf{2. Isolate a Non-Zero Difference}
+Since $x \neq y$, they must differ in at least one position. Without loss of generality, assume $x_4 \neq y_4$. We isolate the term involving $a_4$:
+\begin{align*}
+    a_4(x_4 - y_4) + \sum_{i=1}^{3} a_i (x_i - y_i) &\equiv 0 \pmod{n} \\
+    a_4(x_4 - y_4) &\equiv - \sum_{i=1}^{3} a_i (x_i - y_i) \pmod{n}
+\end{align*}
+Let the right-hand side be $C = \sum_{i=1}^{3} a_i (y_i - x_i)$. The equation becomes:
+\begin{equation}
+    a_4(x_4 - y_4) \equiv C \pmod{n}
+\end{equation}
+
+\textbf{3. Principle of Deferred Decisions}
+Imagine we pick the random coefficients $a_1, a_2, a_3$ \textbf{first}. This fixes the value of $C$. Now, we pick $a_4$.
+
+Since $n$ is prime and $(x_4 - y_4) \not\equiv 0 \pmod{n}$, the term $(x_4 - y_4)$ has a unique modular inverse. We multiply both sides by this inverse:
+\begin{equation}
+    a_4 \equiv C \cdot (x_4 - y_4)^{-1} \pmod{n}
+\end{equation}
+
+\textbf{4. Conclusion}
+The equation above yields exactly \textbf{one} valid solution for $a_4$.
+Since $a_4$ is chosen uniformly from $n$ possibilities $\{0, \dots, n-1\}$, the probability of picking exactly this one solution is:
+\begin{equation}
+    \Prob[\text{Collision}] = \frac{1}{n}
+\end{equation}
+Thus, the family is Universal.
+
+\newpage
+
+\section{Bloom Filters}
+
+A Bloom Filter is a space-efficient probabilistic data structure for set membership. It yields no false negatives, but possible false positives.
+
+\subsection{Mathematical Derivation of False Positive Rate}
+\textbf{Parameters:}
+\begin{itemize}
+    \item $n$: Number of items inserted.
+    \item $m$: Size of the bit array.
+    \item $k$: Number of hash functions.
+\end{itemize}
+
+\textbf{Step 1: Probability a bit is 0}
+When inserting 1 element with 1 hash function, the probability a specific bit is \textit{not} set (remains 0) is:
+$$ 1 - \frac{1}{m} $$
+After inserting $n$ elements using $k$ hash functions, we perform $kn$ total writes. The probability the bit is still 0 is:
+$$ \left(1 - \frac{1}{m}\right)^{kn} $$
+
+\textbf{Step 2: Taylor Series Approximation}
+Recall the Taylor series expansion for $e^{-x}$ for small $x$: $e^{-x} \approx 1 - x$.
+Conversely, for large $m$:
+$$ 1 - \frac{1}{m} \approx e^{-1/m} $$
+Substituting this into our equation:
+$$ \Prob[\text{bit is 0}] \approx \left( e^{-1/m} \right)^{kn} = e^{-kn/m} $$
+
+\textbf{Step 3: Probability a bit is 1}
+$$ \Prob[\text{bit is 1}] = 1 - \Prob[\text{bit is 0}] = 1 - e^{-kn/m} $$
+
+\textbf{Step 4: False Positive Probability ($\epsilon$)}
+A false positive occurs when we query an item that is \textbf{not} in the set, but all $k$ hash functions map to bits that happen to be 1. Assuming independence:
+\begin{equation}
+    \epsilon = \left( 1 - e^{-kn/m} \right)^k
+\end{equation}
+
+\section{Summary Checklist}
+\begin{itemize}
+    \item \textbf{Why Prime Buckets?} Prime $n$ ensures that every non-zero difference $(x_i - y_i)$ has a modular inverse. This guarantees the collision equation has a unique solution.
+    \item \textbf{Invertible Slopes:} In affine hashing $h(x) = (ax+b) \pmod{m}$, if $a$ is not coprime to $m$ ($\gcd(a,m) > 1$), multiple keys will collapse to the same bucket systematically. We need $\gcd(a,m)=1$.
+    \item \textbf{Universal Bound:} The gold standard is $\Prob[\text{Collision}] \le 1/n$.
+\end{itemize}
+
+\end{document}
