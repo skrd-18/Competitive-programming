@@ -1,0 +1,16 @@
+\contentsline {section}{\numberline {1}Introduction}{1}{}%
+\contentsline {section}{\numberline {2}Method 1: Direct Differentiation (The "Brute Force" Approach)}{2}{}%
+\contentsline {subsection}{\numberline {2.1}Step-by-Step Derivatives}{2}{}%
+\contentsline {subsection}{\numberline {2.2}Identifying the Pattern}{2}{}%
+\contentsline {subsection}{\numberline {2.3}Constructing the Series}{3}{}%
+\contentsline {section}{\numberline {3}Method 2: Integration of Geometric Series (The Elegant Approach)}{3}{}%
+\contentsline {subsection}{\numberline {3.1}The Geometric Series}{3}{}%
+\contentsline {subsection}{\numberline {3.2}Relating to Natural Log}{3}{}%
+\contentsline {subsection}{\numberline {3.3}Term-by-Term Integration}{4}{}%
+\contentsline {section}{\numberline {4}Nuance: Convergence and Bounds}{4}{}%
+\contentsline {subsection}{\numberline {4.1}Radius of Convergence}{4}{}%
+\contentsline {subsection}{\numberline {4.2}Useful Inequalities (For Bloom Filters/Birthday Paradox)}{4}{}%
+\contentsline {section}{\numberline {5}Converting Intractable Products into Solvable Sums}{5}{}%
+\contentsline {section}{\numberline {6}The "Exponential Approximation" Trick}{5}{}%
+\contentsline {section}{\numberline {7}Justification: Why is it safe?}{6}{}%
+\contentsline {section}{\numberline {8}Summary}{6}{}%

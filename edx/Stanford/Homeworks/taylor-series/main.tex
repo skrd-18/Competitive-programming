@@ -1,0 +1,203 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{xcolor}
+\usepackage{graphicx}
+
+% Page layout settings
+\geometry{a4paper, margin=1in}
+
+% Custom environments for cleaner look
+\newtheorem{theorem}{Theorem}
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+\newtheorem{remark}{Remark}
+
+\title{\textbf{Deep Dive: Taylor Series Expansion of $\ln(1-x)$}}
+\author{Professor's Detailed Notes}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+    This document provides a rigorous derivation of the Taylor (Maclaurin) series for $f(x) = \ln(1-x)$ centered at $x=0$. We explore two derivation methods, analyze the radius of convergence, and discuss the specific inequalities used in probabilistic proofs (e.g., Bloom Filters and the Birthday Paradox).
+\end{abstract}
+
+\tableofcontents
+
+\vspace{1em}
+\hrule
+\vspace{1em}
+
+\section{Introduction}
+The Taylor series representation of a function $f(x)$ centered at $a$ is given by:
+\begin{equation}
+    f(x) = \sum_{n=0}^{\infty} \frac{f^{(n)}(a)}{n!} (x-a)^n
+\end{equation}
+When $a=0$, this is called a \textbf{Maclaurin series}:
+\begin{equation}
+    f(x) = \sum_{n=0}^{\infty} \frac{f^{(n)}(0)}{n!} x^n
+\end{equation}
+
+Our goal is to find this series for $f(x) = \ln(1-x)$.
+
+\section{Method 1: Direct Differentiation (The "Brute Force" Approach)}
+We compute the $n$-th derivatives of $f(x)$ and evaluate them at $x=0$.
+
+\subsection{Step-by-Step Derivatives}
+Let $f(x) = \ln(1-x)$.
+
+\begin{enumerate}
+    \item \textbf{Zeroth Derivative ($n=0$):}
+    \[ f(0) = \ln(1-0) = \ln(1) = 0 \]
+
+    \item \textbf{First Derivative ($n=1$):}
+    Using the chain rule ($\frac{d}{dx}\ln(u) = \frac{u'}{u}$):
+    \[ f'(x) = \frac{1}{1-x} \cdot (-1) = -(1-x)^{-1} \]
+    At $x=0$:
+    \[ f'(0) = -1 \]
+
+    \item \textbf{Second Derivative ($n=2$):}
+    \[ f''(x) = -(-1)(1-x)^{-2} \cdot (-1) = -(1-x)^{-2} \]
+    At $x=0$:
+    \[ f''(0) = -1 \]
+
+    \item \textbf{Third Derivative ($n=3$):}
+    \[ f'''(x) = -(-2)(1-x)^{-3} \cdot (-1) = -2(1-x)^{-3} \]
+    At $x=0$:
+    \[ f'''(0) = -2 \]
+
+    \item \textbf{Fourth Derivative ($n=4$):}
+    \[ f^{(4)}(x) = -2(-3)(1-x)^{-4} \cdot (-1) = -6(1-x)^{-4} \]
+    At $x=0$:
+    \[ f^{(4)}(0) = -6 \]
+\end{enumerate}
+
+\subsection{Identifying the Pattern}
+Looking at the sequence of derivatives at $x=0$: $0, -1, -1, -2, -6, \dots$
+The pattern for $n \ge 1$ is:
+\begin{equation}
+    f^{(n)}(0) = -(n-1)!
+\end{equation}
+
+\subsection{Constructing the Series}
+Substituting this into the general Maclaurin formula:
+\begin{align*}
+    \ln(1-x) &= f(0) + \sum_{n=1}^{\infty} \frac{f^{(n)}(0)}{n!} x^n \\
+    &= 0 + \sum_{n=1}^{\infty} \frac{-(n-1)!}{n!} x^n \\
+    &= -\sum_{n=1}^{\infty} \frac{(n-1)!}{n \cdot (n-1)!} x^n \quad \text{(Since $n! = n \cdot (n-1)!$)} \\
+    &= -\sum_{n=1}^{\infty} \frac{1}{n} x^n
+\end{align*}
+
+\textbf{Result:}
+\begin{equation} \label{eq:taylor}
+    \ln(1-x) = -x - \frac{x^2}{2} - \frac{x^3}{3} - \frac{x^4}{4} - \dots
+\end{equation}
+
+\section{Method 2: Integration of Geometric Series (The Elegant Approach)}
+Your lecture notes mention that "useful tricks for deriving new Taylor series are differentiation and integration" (Bloom Filters 4.pdf, Page 5). This is that trick.
+
+\subsection{The Geometric Series}
+Recall the sum of a geometric series for $|t| < 1$:
+\[ \frac{1}{1-t} = \sum_{n=0}^{\infty} t^n = 1 + t + t^2 + t^3 + \dots \]
+
+\subsection{Relating to Natural Log}
+Notice that the derivative of our target function is related to this series:
+\[ \frac{d}{dx} \ln(1-x) = \frac{-1}{1-x} \]
+Therefore, we can express $\ln(1-x)$ as an integral:
+\[ \ln(1-x) = \int_{0}^{x} \frac{-1}{1-t} \, dt \]
+
+\subsection{Term-by-Term Integration}
+Substitute the series expansion into the integral:
+\begin{align*}
+    \ln(1-x) &= -\int_{0}^{x} \left( \sum_{n=0}^{\infty} t^n \right) \, dt \\
+    &= -\sum_{n=0}^{\infty} \int_{0}^{x} t^n \, dt \\
+    &= -\sum_{n=0}^{\infty} \left[ \frac{t^{n+1}}{n+1} \right]_{0}^{x} \\
+    &= -\sum_{n=0}^{\infty} \frac{x^{n+1}}{n+1}
+\end{align*}
+Re-indexing the sum by letting $k = n+1$ (so when $n=0, k=1$), we get the same result:
+\begin{equation}
+    \ln(1-x) = -\sum_{k=1}^{\infty} \frac{x^k}{k}
+\end{equation}
+
+\section{Nuance: Convergence and Bounds}
+
+\subsection{Radius of Convergence}
+Using the \textbf{Ratio Test}, the series converges when:
+\[ \lim_{n \to \infty} \left| \frac{x^{n+1}/(n+1)}{x^n/n} \right| = |x| \lim_{n \to \infty} \frac{n}{n+1} = |x| < 1 \]
+Thus, the series is valid for $-1 < x < 1$.
+
+\begin{itemize}
+    \item \textbf{At $x = -1$:} The series becomes $-\sum \frac{(-1)^n}{n}$, which is the alternating harmonic series (Converges).
+    \item \textbf{At $x = 1$:} The series becomes $-\sum \frac{1}{n}$, which is the harmonic series (Diverges toward $-\infty$).
+\end{itemize}
+\textbf{Interval of Convergence:} $[-1, 1)$.
+
+\subsection{Useful Inequalities (For Bloom Filters/Birthday Paradox)}
+In your course notes (Bloom Filters 4.pdf, Page 6), the Taylor series is used to approximate probabilities.
+
+\textbf{1. The Linear Upper Bound:}
+Since all terms in the expansion $\ln(1-x) = -x - \frac{x^2}{2} - \dots$ are negative (for $0 < x < 1$):
+\[ \ln(1-x) \le -x \]
+This is used to show $1-x \le e^{-x}$.
+
+\textbf{2. The Quadratic Lower Bound:}
+For small $x$, the notes derive a tighter bound by keeping the second term:
+\[ \ln(1-x) \ge -x - x^2 \]
+This "two-sided bound" is critical for proving that the approximations in the Birthday Paradox are accurate.
+
+
+\section{Converting Intractable Products into Solvable Sums}
+
+In probability, we often calculate the probability of \textit{successive independent events}. This results in a product of probabilities, which is algebraically difficult to solve. 
+
+\smallskip
+
+In the analysis of probabilistic algorithms (like Hashing and Bloom Filters), we frequently encounter the expression $\ln(1-x)$ where $x$ is a very small number (close to 0). We use the Taylor expansion for three specific strategic reasons. 
+
+\textbf{Example from Birthday Paradox:}
+The probability that $n$ people have unique birthdays is the product:
+\[ P(\text{unique}) = \prod_{k=0}^{n-1} \left( 1 - \frac{k}{365} \right) \]
+Solving for $n$ directly from this product is nearly impossible
+
+\textbf{The Strategy:}
+\begin{enumerate}
+    \item Apply $\ln$ to turn the product into a sum:
+    \[ \ln(P) = \sum_{k=0}^{n-1} \ln\left( 1 - \frac{k}{365} \right) \]
+    \item \textbf{Apply Taylor Series:} Replace the complex log term with a simple polynomial. Since $x = \frac{k}{365}$ is small, $\ln(1-x) \approx -x$.
+    \[ \ln(P) \approx \sum_{k=0}^{n-1} \left( - \frac{k}{365} \right) \]
+    \item Now we can pull out the constant and use the arithmetic sum formula $\sum k = \frac{n(n-1)}{2}$.
+\end{enumerate}
+Without the Taylor expansion, we would be stuck with the logarithm inside the summation.
+
+\section{The "Exponential Approximation" Trick}
+In Computer Science, we frequently use the inequality $1 - x \le e^{-x}$. This is derived directly from the Taylor series of $\ln(1-x)$.
+
+\textbf{Derivation:}
+\[ \ln(1-x) \approx -x \implies 1-x \approx e^{-x} \]
+
+\textbf{Application in Bloom Filters:}
+When analyzing Bloom Filters, we determine the probability that a bit remains 0 after $n$ insertions into $m$ bits.
+\[ P(\text{bit is 0}) = \left( 1 - \frac{1}{m} \right)^{kn} \]
+Calculating limits with $\left(1 - \frac{1}{m}\right)$ is tedious. Using the Taylor approximation, we instantly simplify:
+\[ \left( 1 - \frac{1}{m} \right)^{kn} \approx \left( e^{-1/m} \right)^{kn} = e^{-kn/m} \]
+This form allows us to easily use calculus to find the optimal number of hash functions $k$.
+
+\section{Justification: Why is it safe?}
+The Taylor series for $\ln(1-x)$ is an alternating series (for $x>0$):
+\[ \ln(1-x) = -x - \frac{x^2}{2} - \frac{x^3}{3} - \dots \]
+For very small $x$ (like $1/365$ or $1/m$), the higher-order terms ($\frac{x^2}{2}, \frac{x^3}{3}$) vanish very quickly.
+
+\begin{itemize}
+    \item \textbf{First Order Term ($-x$):} Dominates the value.
+    \item \textbf{Error Term ($-\frac{x^2}{2}$):} Provides a tight error bound if we need more precision.
+\end{itemize}
+In the Birthday Paradox with $n \approx 23$, the quadratic correction is small ($\approx 0.014$), confirming that the linear approximation is highly accurate.
+
+\section{Summary}
+We use the expansion $\ln(1-x) \approx -x$ because it transforms \textbf{products} (hard to solve) into \textbf{sums} (easy to solve) and allows us to approximate \textbf{polynomials} as \textbf{exponentials} ($1-x \approx e^{-x}$), which are much easier to manipulate in calculus.
+
+\end{document}
