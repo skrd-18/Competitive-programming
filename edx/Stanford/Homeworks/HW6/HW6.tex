@@ -231,7 +231,7 @@ Thus, the family is Universal.
 
 \section{Bloom Filters}
 
-A Bloom Filter is a space-efficient probabilistic data structure for set membership. It yields no false negatives, but possible false positives.
+A Bloom Filter is a space-efficient probabilistic data structure for set membership. It yields no false negatives, but possible false positives($h_i(x)$'s already set to 1 by other insertions.).
 
 \subsection{Mathematical Derivation of False Positive Rate}
 \textbf{Parameters:}
@@ -269,5 +269,7 @@ A false positive occurs when we query an item that is \textbf{not} in the set, b
     \item \textbf{Invertible Slopes:} In affine hashing $h(x) = (ax+b) \pmod{m}$, if $a$ is not coprime to $m$ ($\gcd(a,m) > 1$), multiple keys will collapse to the same bucket systematically. We need $\gcd(a,m)=1$.
     \item \textbf{Universal Bound:} The gold standard is $\Prob[\text{Collision}] \le 1/n$.
 \end{itemize}
+
+\section{Question 1}
 
 \end{document}
