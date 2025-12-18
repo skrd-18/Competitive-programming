@@ -23,7 +23,6 @@
 \maketitle
 
 \section{The Motivation for Hashing}
-
 To maintain a set $S$ of keys drawn from a large universe $U$, we compare three fundamental data structures. The goal of hashing is to combine the speed of arrays with the space efficiency of linked lists.
 
 \begin{table}[h]
@@ -271,5 +270,73 @@ A false positive occurs when we query an item that is \textbf{not} in the set, b
 \end{itemize}
 
 \section{Question 1}
+
+\section{Optional Theory Problem}
+
+\textbf{Question}: Recall that a set $H$ of hash functions (mapping the elements of a universe $U$ to the buckets $\{0, 1, 2, \ldots, n-1\}$) is universal if for every distinct $x, y \in U$, the probability $Prob[h(x) = h(y)]$ that $x$ and $y$ collide, assuming that the hash function $h$ is chosen uniformly at random from $H$, is at most $1/n$. In this problem you will prove that a collision probability of $1/n$ is essentially the best possible. Precisely, suppose that $H$ is a family of hash functions mapping $U$ to $\{0, 1, 2, \ldots, n-1\}$, as above. Show that there must be a pair $x, y \in U$ of distinct elements such that, if $h$ is chosen uniformly at random from $H$, then $Prob[h(x) = h(y)] \geq \frac{1}{n} - \frac{1}{|U|}$.
+
+\smallskip
+
+\textbf{Solution:} Let $H$ be a family of hash functions mapping a universe $U$ of size $M = |U|$ to $n$ buckets $\{0, 1, \dots, n-1\}$.
+We wish to show that there exists at least one pair of distinct keys $x, y \in U$ such that:
+\begin{equation}
+    \Pr_{h \in H} [h(x) = h(y)] \ge \frac{1}{n} - \frac{1}{|U|}
+\end{equation}
+
+\subsection{Proof via the Average Argument}
+We will prove this by showing that the \textbf{average} collision probability over \textit{all} possible pairs of keys is at least $\frac{1}{n} - \frac{1}{M}$. If the average is this high, at least one specific pair must meet or exceed this value.
+
+\subsection{Step 1: Counting Pairs}
+Let $N_{\text{pairs}}$ be the total number of distinct pairs of keys in the universe $U$.
+\begin{equation}
+    N_{\text{pairs}} = \binom{M}{2} = \frac{M(M-1)}{2}
+\end{equation}
+
+\subsection{Step 2: Analysis of a Single Hash Function}
+Consider a fixed hash function $h \in H$. Let $c_i$ be the number of keys mapping to bucket $i$ (where $\sum_{i=0}^{n-1} c_i = M$).
+The number of colliding pairs produced by this specific function, denoted $C(h)$, is the sum of the pairs within each bucket:
+\begin{equation}
+    C(h) = \sum_{i=0}^{n-1} \binom{c_i}{2} = \sum_{i=0}^{n-1} \frac{c_i(c_i - 1)}{2}
+\end{equation}
+
+To find the lower bound, we minimize $C(h)$. Since $f(x) = x(x-1)$ is a convex function, the sum is minimized by Jensen's Inequality when the keys are distributed as evenly as possible among the buckets (i.e., $c_i = M/n$ for all $i$).
+
+The minimum number of collisions $C_{\text{min}}$ for \textit{any} hash function is:
+\begin{align*}
+    C_{\text{min}} &= \sum_{i=0}^{n-1} \frac{\frac{M}{n}(\frac{M}{n} - 1)}{2} \\
+    &= n \cdot \frac{\frac{M}{n}(\frac{M - n}{n})}{2} \\
+    &= \frac{M(M-n)}{2n}
+\end{align*}
+
+\subsection{Step 3: Calculating the Average Probability}
+The average collision probability, $P_{\text{avg}}$, is the total minimum collisions divided by the total number of pairs.
+\begin{align*}
+    P_{\text{avg}} &= \frac{C_{\text{min}}}{N_{\text{pairs}}} \\
+    &= \frac{ \frac{M(M-n)}{2n} }{ \frac{M(M-1)}{2} } \\
+    &= \frac{M(M-n)}{2n} \cdot \frac{2}{M(M-1)} \\
+    &= \frac{M-n}{n(M-1)}
+\end{align*}
+
+\subsection{Step 4: Comparison with the Bound}
+We compare our calculated $P_{\text{avg}}$ with the target bound $\frac{1}{n} - \frac{1}{M}$.
+First, simplify the target bound:
+\begin{equation}
+    \text{Target} = \frac{1}{n} - \frac{1}{M} = \frac{M - n}{nM}
+\end{equation}
+
+Now, compare the denominators of $P_{\text{avg}}$ and the Target:
+\begin{equation}
+    P_{\text{avg}} = \frac{M-n}{n(M-1)} \quad \text{vs} \quad \text{Target} = \frac{M-n}{nM}
+\end{equation}
+Since $M-1 < M$, the denominator of $P_{\text{avg}}$ is smaller, making the fraction larger. Therefore:
+\begin{equation}
+    \frac{M-n}{n(M-1)} > \frac{M-n}{nM}
+\end{equation}
+\begin{equation}
+    P_{\text{avg}} > \frac{1}{n} - \frac{1}{|U|}
+\end{equation}
+
+\subsection{Conclusion}
+Since the average collision probability over all pairs is strictly greater than $\frac{1}{n} - \frac{1}{|U|}$, there must exist at least one pair $(x, y)$ such that $\Pr[h(x)=h(y)] \ge P_{\text{avg}} > \frac{1}{n} - \frac{1}{|U|}$.
 
 \end{document}

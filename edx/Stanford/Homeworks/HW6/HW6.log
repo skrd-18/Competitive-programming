@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.11.20)  17 DEC 2025 23:03
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.11.20)  18 DEC 2025 21:32
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -363,7 +363,7 @@ LaTeX Font Info:    Trying to load font information for U+msb on input line 24.
  (/usr/local/texlive/2025/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-Overfull \hbox (12.2399pt too wide) in paragraph at lines 32--46
+Overfull \hbox (12.2399pt too wide) in paragraph at lines 31--45
  [][] 
  []
 
@@ -374,11 +374,11 @@ Overfull \hbox (12.2399pt too wide) in paragraph at lines 32--46
 {/usr/local/texlive/2025/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 107.
+(hyperref)                removing `math shift' on input line 106.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 107.
+(hyperref)                removing `math shift' on input line 106.
 
 
 
@@ -388,27 +388,31 @@ Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 
 [4]
 
-[5] (./HW6.aux)
+[5]
+
+[6]
+
+[7] (./HW6.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
  ***********
 Package rerunfilecheck Info: File `HW6.out' has not changed.
-(rerunfilecheck)             Checksum: 3B33D72E242F1952F1EF567D180ECB7C;2807.
+(rerunfilecheck)             Checksum: ED764B1A2106963D31B2B0A6A8C3F80A;4292.
  ) 
 Here is how much of TeX's memory you used:
- 10495 strings out of 473190
- 158428 string characters out of 5715799
- 577651 words of memory out of 5000000
- 33597 multiletter control sequences out of 15000+600000
+ 10518 strings out of 473190
+ 158717 string characters out of 5715799
+ 578659 words of memory out of 5000000
+ 33604 multiletter control sequences out of 15000+600000
  567543 words of font info for 68 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 75i,10n,79p,614b,505s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,12n,79p,854b,505s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb>
-Output written on HW6.pdf (5 pages, 200814 bytes).
+Output written on HW6.pdf (7 pages, 213968 bytes).
 PDF statistics:
- 200 PDF objects out of 1000 (max. 8388607)
- 159 compressed objects within 2 object streams
- 37 named destinations out of 1000 (max. 500000)
- 129 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 248 PDF objects out of 1000 (max. 8388607)
+ 204 compressed objects within 3 object streams
+ 53 named destinations out of 1000 (max. 500000)
+ 185 words of extra memory for PDF output out of 10000 (max. 10000000)
 
