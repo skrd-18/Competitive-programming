@@ -64,7 +64,7 @@ def finishing_order(GR, n):
             explored[start] = 1  # start is explored
 
             while stack:  # While the stack is not empty
-                u, i = stack[-1]  # Peek at the last element
+                u, i = stack[-1]  # Peek at the last element; Last In First Out
                 if i < len(GR[u]):  # Check that the node has at least one edge
                     v = GR[u][i]
                     stack[-1] = u, i + 1  # We have consumed that neighbour slot
