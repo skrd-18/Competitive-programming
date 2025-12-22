@@ -1,6 +1,6 @@
 # Fdb version 4
-["pdflatex"] 1766164894.42929 "/Users/shiva/Documents/Competitive-programming/edx/Stanford/Homeworks/HW3/HW3.tex" "HW3.pdf" "HW3" 1766164894.71162 0
-  "/Users/shiva/Documents/Competitive-programming/edx/Stanford/Homeworks/HW3/HW3.tex" 1766164894.24435 16617 9ae6dbe7a68944d4cc9c3b485700cb7c ""
+["pdflatex"] 1766165178.34227 "/Users/shiva/Documents/Competitive-programming/edx/Stanford/Homeworks/HW3/HW3.tex" "HW3.pdf" "HW3" 1766165178.63927 0
+  "/Users/shiva/Documents/Competitive-programming/edx/Stanford/Homeworks/HW3/HW3.tex" 1766165178.15024 16578 437f5910f4090ea32daa2d8d46579896 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1136849721 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/tfm/jknappen/ec/tcrm1000.tfm" 1136768653 1536 e07581a4bb3136ece9eeb4c3ffab8233 ""
@@ -64,8 +64,8 @@
   "/usr/local/texlive/2025/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1763648556 5467155 19efa205003f9ecad95fbbaa6ff24da1 ""
   "/usr/local/texlive/2025/texmf-var/web2c/pdftex/pdflatex.fmt" 1763648549 3345745 325649256e36bbe3dee61472f1f7fd97 ""
   "/usr/local/texlive/2025/texmf.cnf" 1741450484 577 418a7058ec8e006d8704f60ecd22c938 ""
-  "HW3.aux" 1766164894.67752 32 77e0dffd05b653a64f0caf3eb9bb454a "pdflatex"
-  "HW3.tex" 1766164894.24435 16617 9ae6dbe7a68944d4cc9c3b485700cb7c ""
+  "HW3.aux" 1766165178.60444 32 77e0dffd05b653a64f0caf3eb9bb454a "pdflatex"
+  "HW3.tex" 1766165178.15024 16578 437f5910f4090ea32daa2d8d46579896 ""
   (generated)
   "HW3.aux"
   "HW3.log"
