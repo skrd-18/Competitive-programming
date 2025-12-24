@@ -1,6 +1,5 @@
 import typing
 import sys
-import pdb
 
 # It's good practice to increase the recursion limit for deep recursion problems.
 sys.setrecursionlimit(20000)
@@ -19,9 +18,19 @@ def read_file(filename: str) -> typing.List[int]:
 comparison_count = 0
 
 
+# Problem 3
 def partitionMiddle(ar: typing.List[int], left: int, right: int) -> int:
     """
-    Partitions the subarray ar[left...right] using the first element as the pivot.
+    Partitions the subarray ar[left...right] using the middle element as the pivot.
+
+    Compute the number of comparisons (as in Problem 1), using the "median-of-three" pivot rule. [The primary motivation behind this rule is to do a little bit of extra work to get much better performance on input arrays that are nearly sorted or reverse sorted.]
+    In more detail, you should choose the pivot as follows. Consider the first, middle, and final elements of the given array. (If the array has odd length it should be clear what the "middle" element is; for an array with even length 2k, use the kth element as the "middle" element.
+    So for the array 4 5 6 7, the "middle" element is the second one ---- 5 and not 6!) Identify which of these three elements is the median (i.e., the one whose value is in between the other two), and use this as your pivot.
+    As discussed in the first and second parts of this programming assignment, be sure to implement Partition exactly as described in the video lectures (including exchanging the pivot element with the first element just before the main Partition subroutine).
+
+    EXAMPLE: For the input array 8 2 4 5 7 1 you would consider the first (8), middle (4), and last (1) elements; since 4 is the median of the set {1,4,8}, you would use 4 as your pivot element.
+
+
     Returns the final position of the pivot.
     """
 
@@ -57,6 +66,7 @@ def partitionMiddle(ar: typing.List[int], left: int, right: int) -> int:
     return i - 1  # Return the pivot's new index
 
 
+# Problem 1
 def partitionLeft(ar: typing.List[int], left: int, right: int) -> int:
     """
     Partitions the subarray ar[left...right] using the first element as the pivot.
@@ -75,9 +85,10 @@ def partitionLeft(ar: typing.List[int], left: int, right: int) -> int:
     return i - 1  # Return the pivot's new index
 
 
+# Problem 2
 def partitionRight(ar: typing.List[int], left: int, right: int) -> int:
     """
-    Partitions the subarray ar[left...right] using the first element as the pivot.
+    Partitions the subarray ar[left...right] using the last element as the pivot.
     Returns the final position of the pivot.
     """
     ar[left], ar[right] = ar[right], ar[left]  # Swap the first and last elements
