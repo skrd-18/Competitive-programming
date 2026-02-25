@@ -13,5 +13,6 @@
     "stacktrace": "c",
     "stdlib.h": "c",
     "algorithm": "cpp"
-  }
+  },
+  "C_Cpp.default.compilerPath": "/home/shiva/Projects/Competitive-programming/leetcode/0242-Valid-Anagram/main.cpp"
 }
