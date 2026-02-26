@@ -1,7 +1,0 @@
-[
-{
-  "directory": "/home/shankar/Shiva/Competitive-programming/build",
-  "command": "/usr/bin/gcc   -g -g -I/include -Wall -Wbad-function-cast -Wconversion -Wextra -Wfloat-equal -Wmissing-variable-declarations -Wpedantic -Wshadow -Wunreachable-code-aggressive -Wvla -Wtautological-compare -Wtautological-constant-in-range-compare -Wcomma -Wformat-non-iso -Wdocumentation -Wstrict-prototypes -o CMakeFiles/main.dir/kattis/count-the-vowels/main.c.o -c /home/shankar/Shiva/Competitive-programming/kattis/count-the-vowels/main.c",
-  "file": "/home/shankar/Shiva/Competitive-programming/kattis/count-the-vowels/main.c"
-}
-]

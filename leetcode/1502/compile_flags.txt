@@ -1,0 +1,15 @@
+-I
+C:\tools\mingw64\include\c++\12.2.0
+-I
+C:\tools\mingw64\include\c++\12.2.0\x86_64-w64-mingw32
+-I
+C:\tools\mingw64\x86_64-w64-mingw32\include
+-I
+.
+-g
+-Wall
+-Wextra
+-Werror
+-pedantic
+-D_USE_MINGW_ANSI_STDIO
+-ferror-limit=0
