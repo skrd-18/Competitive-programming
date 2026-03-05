@@ -1,18 +1,3 @@
 {
-  "cmake.configureOnOpen": false,
-  "files.associations": {
-    "common.h": "c",
-    "stdint-gcc.h": "c",
-    "array": "c",
-    "any": "c",
-    "string_view": "c",
-    "ranges": "c",
-    "span": "c",
-    "regex": "c",
-    "type_traits": "c",
-    "stacktrace": "c",
-    "stdlib.h": "c",
-    "algorithm": "cpp"
-  },
-  "C_Cpp.default.compilerPath": "/usr/bin/g++"
+
 }
