@@ -6,19 +6,18 @@ class Solution:
     def myPow(self, x: float, n: int) -> float:
         # Base Case
         if n == 0:
-            return 1
-        # Negative case
+            return 1.0
+
+        #  Negative Case
         if n < 0:
-            n = abs(n)
-            half_power = self.myPow(x, n // 2)
-            if n % 2 == 0:
-                return 1 / (half_power * half_power)
-            elif n % 2 != 0:
-                return 1 / (half_power * half_power * x)
+            return 1.0 / self.myPow(x, -n)
+
+        # (Positive powers only)
         half_power = self.myPow(x, n // 2)
+
         if n % 2 == 0:
             return half_power * half_power
-        elif n % 2 != 0:
+        else:
             return half_power * half_power * x
 
 
