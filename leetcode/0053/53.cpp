@@ -1,7 +1,7 @@
 // Idea is very simple. Basically, keep adding each integer to the sequence until the sum drops below 0.
-// If sum is negative, then should reset the sequence.
-#include <stdio.h>
-#include <stdlib.h>
+// If sum is negative, that should reset the sequence.
+#include <iostream>
+#include <vector>
 
 class Solution
 {
@@ -18,3 +18,9 @@ public:
         return ans;
     }
 };
+
+int main(int argc, char const *argv[])
+{
+    Solution sol;
+    return 0;
+}
