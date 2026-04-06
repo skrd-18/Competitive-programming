@@ -11,16 +11,16 @@ int main(int argc, char const *argv[])
 {
     unsigned long long N = 0;
     cin >> N;
-    cout << "N " << N << endl;
-    unsigned long long P = 0;
-    unsigned long long k = 1;
-    while (P < N)
+    // cout << "N " << N << endl;
+    unsigned long long P = 1;
+    unsigned long long L = 0;
+
+    while (P * 2 <= N)
     {
-        P = pow(2, k);
-        k += 1;
+        P *= 2;
     }
-    cout << "k " << k << endl;
-    P = pow(2, k);
-    cout << "P " << P << endl;
+    // cout << "P " << P << endl;
+    L = N - P;
+    cout << (2 * L) + 1 << endl;
     return 0;
 }
