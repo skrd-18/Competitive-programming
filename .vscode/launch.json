@@ -22,6 +22,11 @@
                     "text": "-gdb-set disassembly-flavor intel",
                     "ignoreFailures": true
                 }
+                {
+                    "description": "Disable debuginfod to stop GDB from freezing",
+                    "text": "set debuginfod urls ",
+                    "ignoreFailures": true
+                }
             ],
             "preLaunchTask": "C/C++: g++ build active file",
             "miDebuggerPath": "/usr/bin/gdb"
