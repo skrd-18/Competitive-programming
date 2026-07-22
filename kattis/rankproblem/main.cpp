@@ -23,11 +23,19 @@ int main(int argc, char const *argv[])
     // We are using 0 based hashmap
     std::unordered_map<std::string, int> token_to_index;
 
+    std::vector<std::string> token_array;
+
+    // Generate token array once and use it many times
     for (unsigned int i = 0; i < n; i += 1)
     {
         std::string token = "T" + std::to_string(i + 1);
-        T.push_back(token);
-        token_to_index[token] = i;
+        token_array.push_back(token);
+    }
+
+    for (unsigned int i = 0; i < n; i += 1)
+    {
+        T.push_back(token_array[i]);
+        token_to_index[token_array[i]] = i;
     }
 
     // print out the T array for verifiability
@@ -60,13 +68,13 @@ int main(int argc, char const *argv[])
             // Finally, we swap the first index and the second index
             std::string tmp = T[idx2];
             token_to_index[tmp] = idx1;
-        }
-        // Resort the array T
-        for (unsigned int k = 0; k < n; k += 1)
-        {
-            std::string token = "T" + std::to_string(k + 1);
-            unsigned int tmp = token_to_index[token];
-            T[tmp] = token;
+
+            // Only Re-Sort the array T on the condition when there is an upset (idx1 < idx2)
+            for (unsigned int k = 0; k < n; k += 1)
+            {
+                unsigned int tmp = token_to_index[token_array[k]];
+                T[tmp] = token_array[k];
+            }
         }
 
         // print out the T array for verifiability
