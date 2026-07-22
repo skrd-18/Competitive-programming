@@ -1,0 +1,8 @@
+[
+{
+  "directory": "/home/shiva/Projects/Competitive-programming/leetcode/1502/build",
+  "command": "/usr/bin/g++   -std=gnu++23 -Wall -Wextra -Wpedantic -g -o CMakeFiles/main.dir/main.cpp.o -c /home/shiva/Projects/Competitive-programming/leetcode/1502/main.cpp",
+  "file": "/home/shiva/Projects/Competitive-programming/leetcode/1502/main.cpp",
+  "output": "CMakeFiles/main.dir/main.cpp.o"
+}
+]

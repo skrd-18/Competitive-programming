@@ -1,0 +1,1 @@
+/usr/bin/g++ -g CMakeFiles/main.dir/kattis/rankproblem/main.cpp.o -o main 

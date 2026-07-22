@@ -2,3 +2,19 @@
 .DS_Store
 build
 data
+
+# Exclude compiled executables with no extension (Mac/Linux)
+*
+!*/
+!*.*
+
+# Exclude specific Windows executables
+*.exe
+*.o
+*.obj
+*.out
+
+
+# Exclude heavy data assets
+*.zip
+*.tar.gz

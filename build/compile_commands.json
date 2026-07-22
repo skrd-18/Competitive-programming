@@ -1,0 +1,8 @@
+[
+{
+  "directory": "/home/shiva/Projects/Competitive-programming/build",
+  "command": "/usr/bin/g++   -g -std=gnu++23 -Wall -Wextra -Wpedantic -g -o CMakeFiles/main.dir/kattis/rankproblem/main.cpp.o -c /home/shiva/Projects/Competitive-programming/kattis/rankproblem/main.cpp",
+  "file": "/home/shiva/Projects/Competitive-programming/kattis/rankproblem/main.cpp",
+  "output": "CMakeFiles/main.dir/kattis/rankproblem/main.cpp.o"
+}
+]
