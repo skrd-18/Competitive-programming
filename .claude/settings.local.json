@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(gcc -Wall -Wextra -O2 -o /tmp/01_sorting_1 01_sorting_1.c)",
+      "Bash(/tmp/01_sorting_1)"
+    ]
+  }
+}
