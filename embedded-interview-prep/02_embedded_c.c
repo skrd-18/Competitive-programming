@@ -30,27 +30,41 @@
  * ------------------------------------------------------------------- */
 void pyramid_stars(int rows)
 {
-    for (int i = 1; i <= rows; i++) {
-        for (int s = 0; s < rows - i; s++) putchar(' ');
-        for (int c = 0; c < 2 * i - 1; c++) putchar('*');
-        putchar('\n');                   /* no trailing spaces */
+    for (int i = 1; i <= rows; i++)
+    {
+        for (int s = 0; s < rows - i; s++)
+            putchar(' ');
+        for (int c = 0; c < 2 * i - 1; c++)
+            putchar('*');
+        putchar('\n'); /* no trailing spaces */
     }
 }
 
 /* char-array variant: builds each line in a buffer first, which is what
- * "using a char array" is hinting at. Also shows you can size a buffer. */
+ * "using a char array" is hinting at. Also shows you can size a buffer.
+
+ * The pattern: for row i (1-indexed), pad = rows - i spaces, then 2*i - 1 characters. That formula is the "trivial" part once you've derived it once — practice deriving it, not memorizing it.
+
+ * The buffer math: widest row is the last one, width = 2*rows - 1, +1 for the NUL. That's the part worth being able to explain out loud (as you just did) since it shows you understand off-by-one and string termination — a common embedded-interview probe point.
+
+ * The mechanics: memset for the padding, a loop for the fill character, manual NUL placement, puts to print, free to clean up. These are generic C idioms you already use elsewhere (buffer manipulation, manual string building) — not specific to this problem.
+
+ * If asked this live, I'd derive the width/pad formulas on the whiteboard first (small example, rows=3, count spaces/stars per row), then write the loop. That's more convincing than reciting code, and it's recoverable even if you blank — the formula-derivation process is the reusable skill, not this function's exact text.*/
 void pyramid_char_array(int rows)
 {
     int width = 2 * rows - 1;
-    char *line = malloc((size_t)width + 1);   /* +1 for the NUL */
-    if (!line) return;
+    char *line = (char *)malloc((size_t)width + 1u); /* +1 for the NUL */ // typecast into (char *)
+    if (!line)
+        return;
 
-    for (int i = 1; i <= rows; i++) {
-        int pad   = rows - i;
+    for (int i = 1; i <= rows; i++)
+    {
+        int pad = rows - i;
         int stars = 2 * i - 1;
-        memset(line, ' ', (size_t)pad);
-        for (int c = 0; c < stars; c++) line[pad + c] = (char)('A' + i - 1);
-        line[pad + stars] = '\0';                  /* terminate, don't print junk */
+        memset(line, ' ', (size_t)pad); // clearing the buffer with empty characters
+        for (int c = 0; c < stars; c++)
+            line[pad + c] = (char)('A' + i - 1);
+        line[pad + stars] = '\0'; /* terminate, don't print junk */
         puts(line);
     }
     free(line);
@@ -68,11 +82,13 @@ void pyramid_char_array(int rows)
 /* (a) input already sorted: classic two-pointer, O(n), O(1) space */
 int dedup_sorted(int *a, int n)
 {
-    if (n <= 1) return n;
-    int w = 1;                            /* write cursor */
+    if (n <= 1)
+        return n;
+    int w = 1; /* write cursor */
     for (int r = 1; r < n; r++)
-        if (a[r] != a[w - 1]) a[w++] = a[r];
-    return w;                             /* new length */
+        if (a[r] != a[w - 1])
+            a[w++] = a[r];
+    return w; /* new length */
 }
 
 /* (b) unsorted, ORDER PRESERVED, no extra memory: O(n^2) but O(1) space.
@@ -80,11 +96,17 @@ int dedup_sorted(int *a, int n)
 int dedup_unsorted_stable(int *a, int n)
 {
     int w = 0;
-    for (int r = 0; r < n; r++) {
+    for (int r = 0; r < n; r++)
+    {
         bool seen = false;
         for (int k = 0; k < w; k++)
-            if (a[k] == a[r]) { seen = true; break; }
-        if (!seen) a[w++] = a[r];
+            if (a[k] == a[r])
+            {
+                seen = true;
+                break;
+            }
+        if (!seen)
+            a[w++] = a[r];
     }
     return w;
 }
@@ -95,17 +117,21 @@ int dedup_unsorted_stable(int *a, int n)
  * Every one of these should be instant. On a secure element / SIM you are
  * packing flags into bytes constantly.
  * ------------------------------------------------------------------- */
-#define BIT(n)              (1UL << (n))
-#define SET_BIT(reg, n)     ((reg) |=  BIT(n))
-#define CLEAR_BIT(reg, n)   ((reg) &= ~BIT(n))
-#define TOGGLE_BIT(reg, n)  ((reg) ^=  BIT(n))
-#define TEST_BIT(reg, n)    (((reg) >> (n)) & 1UL)
+#define BIT(n) (1UL << (n))
+#define SET_BIT(reg, n) ((reg) |= BIT(n))
+#define CLEAR_BIT(reg, n) ((reg) &= ~BIT(n))
+#define TOGGLE_BIT(reg, n) ((reg) ^= BIT(n))
+#define TEST_BIT(reg, n) (((reg) >> (n)) & 1UL)
 
 /* count set bits -- Brian Kernighan's trick, loops once per SET bit */
 int popcount_kernighan(uint32_t v)
 {
     int c = 0;
-    while (v) { v &= v - 1; c++; }        /* clears the lowest set bit */
+    while (v)
+    {
+        v &= v - 1;
+        c++;
+    } /* clears the lowest set bit */
     return c;
 }
 
@@ -143,8 +169,8 @@ bool is_little_endian(void)
 uint32_t swap32(uint32_t v)
 {
     return ((v >> 24) & 0x000000FFu) |
-           ((v >>  8) & 0x0000FF00u) |
-           ((v <<  8) & 0x00FF0000u) |
+           ((v >> 8) & 0x0000FF00u) |
+           ((v << 8) & 0x00FF0000u) |
            ((v << 24) & 0xFF000000u);
 }
 
@@ -153,14 +179,14 @@ void store_be32(uint8_t *p, uint32_t v)
 {
     p[0] = (uint8_t)(v >> 24);
     p[1] = (uint8_t)(v >> 16);
-    p[2] = (uint8_t)(v >>  8);
+    p[2] = (uint8_t)(v >> 8);
     p[3] = (uint8_t)(v);
 }
 
 uint32_t load_be32(const uint8_t *p)
 {
     return ((uint32_t)p[0] << 24) | ((uint32_t)p[1] << 16) |
-           ((uint32_t)p[2] <<  8) |  (uint32_t)p[3];
+           ((uint32_t)p[2] << 8) | (uint32_t)p[3];
 }
 
 /* =====================================================================
@@ -176,35 +202,44 @@ uint32_t load_be32(const uint8_t *p)
  *       writer and I need no critical section. head and tail are volatile
  *       because the ISR writes one of them behind the compiler's back."
  * ------------------------------------------------------------------- */
-#define RB_SIZE 8                          /* MUST be a power of two */
+#define RB_SIZE 8 /* MUST be a power of two */
 #define RB_MASK (RB_SIZE - 1)
 
-typedef struct {
+typedef struct
+{
     uint8_t buf[RB_SIZE];
-    volatile uint16_t head;                /* producer writes */
-    volatile uint16_t tail;                /* consumer writes */
+    volatile uint16_t head; /* producer writes */
+    volatile uint16_t tail; /* consumer writes */
 } ring_buffer_t;
 
-static void rb_init(ring_buffer_t *rb) { rb->head = rb->tail = 0; }
+static void rb_init(ring_buffer_t *rb)
+{
+    rb->head = rb->tail = 0;
+}
 
-static bool rb_is_empty(const ring_buffer_t *rb) { return rb->head == rb->tail; }
+static bool rb_is_empty(const ring_buffer_t *rb)
+{
+    return rb->head == rb->tail;
+}
 
 static bool rb_is_full(const ring_buffer_t *rb)
 {
-    return ((rb->head + 1) & RB_MASK) == rb->tail;   /* one slot kept free */
+    return ((rb->head + 1) & RB_MASK) == rb->tail; /* one slot kept free */
 }
 
-static bool rb_push(ring_buffer_t *rb, uint8_t v)    /* called from ISR */
+static bool rb_push(ring_buffer_t *rb, uint8_t v) /* called from ISR */
 {
-    if (rb_is_full(rb)) return false;                /* drop, never block */
+    if (rb_is_full(rb))
+        return false; /* drop, never block */
     rb->buf[rb->head] = v;
     rb->head = (uint16_t)((rb->head + 1) & RB_MASK); /* publish LAST */
     return true;
 }
 
-static bool rb_pop(ring_buffer_t *rb, uint8_t *out)  /* called from main */
+static bool rb_pop(ring_buffer_t *rb, uint8_t *out) /* called from main */
 {
-    if (rb_is_empty(rb)) return false;
+    if (rb_is_empty(rb))
+        return false;
     *out = rb->buf[rb->tail];
     rb->tail = (uint16_t)((rb->tail + 1) & RB_MASK);
     return true;
@@ -221,38 +256,75 @@ static bool rb_pop(ring_buffer_t *rb, uint8_t *out)  /* called from main */
  *       wire format on ARM either, because unaligned access is slow and
  *       on some cores it faults; I serialise field by field instead."
  * ------------------------------------------------------------------- */
-struct bad_layout  { char a; int b; char c; short d; };   /* wastes space */
-struct good_layout { int b; short d; char a; char c; };   /* packed tight */
+struct bad_layout
+{
+    char a;
+    int b;
+    char c;
+    short d;
+}; /* wastes space */
+struct good_layout
+{
+    int b;
+    short d;
+    char a;
+    char c;
+}; /* packed tight */
 
 /* =====================================================================
  * 7. STRING / ARRAY CLASSICS -- write these without thinking
  * ------------------------------------------------------------------- */
 void reverse_string(char *s)
 {
-    if (!s) return;
+    if (!s)
+        return;
     size_t i = 0, j = strlen(s);
-    if (j == 0) return;
+    if (j == 0)
+        return;
     j--;
-    while (i < j) { char t = s[i]; s[i] = s[j]; s[j] = t; i++; j--; }
+    while (i < j)
+    {
+        char t = s[i];
+        s[i] = s[j];
+        s[j] = t;
+        i++;
+        j--;
+    }
 }
 
 bool is_palindrome(const char *s)
 {
-    if (!s) return false;
+    if (!s)
+        return false;
     size_t i = 0, n = strlen(s);
-    if (n == 0) return true;
+    if (n == 0)
+        return true;
     size_t j = n - 1;
-    while (i < j) { if (s[i] != s[j]) return false; i++; j--; }
+    while (i < j)
+    {
+        if (s[i] != s[j])
+            return false;
+        i++;
+        j--;
+    }
     return true;
 }
 
 /* my_strlen / my_memcpy: they sometimes ask you to reimplement these */
-size_t my_strlen(const char *s) { const char *p = s; while (*p) p++; return (size_t)(p - s); }
+size_t my_strlen(const char *s)
+{
+    const char *p = s;
+    while (*p)
+        p++;
+    return (size_t)(p - s);
+}
 
 void *my_memcpy(void *dst, const void *src, size_t n)
 {
-    unsigned char *d = dst; const unsigned char *s = src;
-    while (n--) *d++ = *s++;
+    unsigned char *d = (unsigned char *)dst;
+    const unsigned char *s = (unsigned char *)src;
+    while (n--)
+        *d++ = *s++;
     return dst;
 }
 
@@ -262,10 +334,22 @@ void *my_memcpy(void *dst, const void *src, size_t n)
  *       that undefined behaviour really does bite." */
 void *my_memmove(void *dst, const void *src, size_t n)
 {
-    unsigned char *d = dst; const unsigned char *s = (const unsigned char *)src;
-    if (d == s || n == 0) return dst;
-    if (d < s) { while (n--) *d++ = *s++; }
-    else       { d += n; s += n; while (n--) *--d = *--s; }
+    unsigned char *d = (unsigned char *)dst;
+    const unsigned char *s = (const unsigned char *)src;
+    if (d == s || n == 0)
+        return dst;
+    if (d < s)
+    {
+        while (n--)
+            *d++ = *s++;
+    }
+    else
+    {
+        d += n;
+        s += n;
+        while (n--)
+            *--d = *--s;
+    }
     return dst;
 }
 
@@ -310,23 +394,33 @@ int main(void)
     pyramid_char_array(5);
 
     puts("\n=== 2. Dedup ===");
-    { int a[] = {1,1,2,3,3,3,4,5,5};
-      int n = dedup_sorted(a, 9);
-      printf("sorted   -> len %d : ", n);
-      for (int i = 0; i < n; i++) printf("%d ", a[i]);
-      putchar('\n'); }
+    {
+        int a[] = {1, 1, 2, 3, 3, 3, 4, 5, 5};
+        int n = dedup_sorted(a, 9);
+        printf("sorted   -> len %d : ", n);
+        for (int i = 0; i < n; i++)
+            printf("%d ", a[i]);
+        putchar('\n');
+    }
 
-    { int a[] = {5,1,5,2,1,9,2,9,3};
-      int n = dedup_unsorted_stable(a, 9);
-      printf("unsorted -> len %d : ", n);
-      for (int i = 0; i < n; i++) printf("%d ", a[i]);
-      putchar('\n'); }
+    {
+        int a[] = {5, 1, 5, 2, 1, 9, 2, 9, 3};
+        int n = dedup_unsorted_stable(a, 9);
+        printf("unsorted -> len %d : ", n);
+        for (int i = 0; i < n; i++)
+            printf("%d ", a[i]);
+        putchar('\n');
+    }
 
     puts("\n=== 3. Bit manipulation ===");
-    { uint32_t reg = 0;
-      SET_BIT(reg, 3); SET_BIT(reg, 5); TOGGLE_BIT(reg, 3);
-      printf("reg = 0x%08X, bit5=%lu, bit3=%lu\n",
-             reg, (unsigned long)TEST_BIT(reg, 5), (unsigned long)TEST_BIT(reg, 3)); }
+    {
+        uint32_t reg = 0;
+        SET_BIT(reg, 3);
+        SET_BIT(reg, 5);
+        TOGGLE_BIT(reg, 3);
+        printf("reg = 0x%08X, bit5=%lu, bit3=%lu\n",
+               reg, (unsigned long)TEST_BIT(reg, 5), (unsigned long)TEST_BIT(reg, 3));
+    }
     printf("popcount(0xF0F0F0F0) = %d  (expect 16)\n", popcount_kernighan(0xF0F0F0F0u));
     printf("is_power_of_two(1024)= %d, (1000)= %d\n",
            is_power_of_two(1024), is_power_of_two(1000));
@@ -335,21 +429,33 @@ int main(void)
     puts("\n=== 4. Endianness ===");
     printf("host is %s-endian\n", is_little_endian() ? "little" : "big");
     printf("swap32(0x12345678) = 0x%08X\n", swap32(0x12345678u));
-    { uint8_t w[4]; store_be32(w, 0xDEADBEEFu);
-      printf("store_be32 -> %02X %02X %02X %02X ; load_be32 -> 0x%08X\n",
-             w[0], w[1], w[2], w[3], load_be32(w)); }
+    {
+        uint8_t w[4];
+        store_be32(w, 0xDEADBEEFu);
+        printf("store_be32 -> %02X %02X %02X %02X ; load_be32 -> 0x%08X\n",
+               w[0], w[1], w[2], w[3], load_be32(w));
+    }
 
     puts("\n=== 5. Ring buffer (capacity 8, usable 7) ===");
-    { ring_buffer_t rb; rb_init(&rb);
-      int pushed = 0;
-      for (uint8_t i = 1; i <= 10; i++) if (rb_push(&rb, i)) pushed++;
-      printf("pushed %d of 10 (expect 7 -- one slot reserved)\n", pushed);
-      printf("popped: ");
-      uint8_t v = 0; while (rb_pop(&rb, &v)) printf("%u ", v);
-      printf("\nempty now? %s\n", rb_is_empty(&rb) ? "yes" : "no");
-      /* wrap-around check */
-      rb_push(&rb, 99); rb_push(&rb, 100);
-      rb_pop(&rb, &v); printf("after wrap, first pop = %u (expect 99)\n", v); }
+    {
+        ring_buffer_t rb;
+        rb_init(&rb);
+        int pushed = 0;
+        for (uint8_t i = 1; i <= 10; i++)
+            if (rb_push(&rb, i))
+                pushed++;
+        printf("pushed %d of 10 (expect 7 -- one slot reserved)\n", pushed);
+        printf("popped: ");
+        uint8_t v = 0;
+        while (rb_pop(&rb, &v))
+            printf("%u ", v);
+        printf("\nempty now? %s\n", rb_is_empty(&rb) ? "yes" : "no");
+        /* wrap-around check */
+        rb_push(&rb, 99);
+        rb_push(&rb, 100);
+        rb_pop(&rb, &v);
+        printf("after wrap, first pop = %u (expect 99)\n", v);
+    }
 
     puts("\n=== 6. Struct padding ===");
     printf("sizeof(bad_layout)  = %zu  {char,int,char,short}\n", sizeof(struct bad_layout));
@@ -357,21 +463,28 @@ int main(void)
     printf("offsetof(bad.b) = %zu (padding before it)\n", offsetof(struct bad_layout, b));
 
     puts("\n=== 7. Strings ===");
-    { char s[] = "embedded";
-      reverse_string(s); printf("reversed: %s\n", s); }
+    {
+        char s[] = "embedded";
+        reverse_string(s);
+        printf("reversed: %s\n", s);
+    }
     printf("is_palindrome(\"level\") = %d, (\"levels\") = %d\n",
            is_palindrome("level"), is_palindrome("levels"));
     printf("my_strlen(\"Thales\") = %zu\n", my_strlen("Thales"));
-    { char buf[16] = "abcdefgh";
-      my_memmove(buf + 2, buf, 6);        /* overlapping, forward */
-      printf("memmove overlap -> %s (expect ababcdef)\n", buf); }
+    {
+        char buf[16] = "abcdefgh";
+        my_memmove(buf + 2, buf, 6); /* overlapping, forward */
+        printf("memmove overlap -> %s (expect ababcdef)\n", buf);
+    }
 
     puts("\n=== 8. sizeof vs strlen trap ===");
-    { char arr[10] = "hi";
-      const char *ptr = "hi";
-      printf("char arr[10]=\"hi\": sizeof=%zu strlen=%zu\n", sizeof arr, strlen(arr));
-      printf("const char *ptr  : sizeof=%zu strlen=%zu  <-- sizeof is the POINTER\n",
-             sizeof ptr, strlen(ptr)); }
+    {
+        char arr[10] = "hi";
+        const char *ptr = "hi";
+        printf("char arr[10]=\"hi\": sizeof=%zu strlen=%zu\n", sizeof arr, strlen(arr));
+        printf("const char *ptr  : sizeof=%zu strlen=%zu  <-- sizeof is the POINTER\n",
+               sizeof ptr, strlen(ptr));
+    }
 
     puts("\nAll sections executed.");
     return 0;

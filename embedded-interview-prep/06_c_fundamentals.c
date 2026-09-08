@@ -224,7 +224,7 @@ int popcount(uint32_t v)
     int c = 0;
     while (v)
     {
-        v &= v - 1;
+        v &= v - 1; // clears the lowest set bit of v
         c++;
     }
     return c;
@@ -248,11 +248,34 @@ uint32_t reverse_bits(uint32_t v) /* reverse the BIT order (not digits!) */
  * and butter, and very likely at a smart-card company */
 uint32_t extract_field(uint32_t reg, int pos, int width)
 {
+    // reg >> pos: slide the field you want down to the bottom.
+    // This is a new trick worth understanding on its own: (1u << width) - 1u builds a mask of exactly width ones.
+    /**
+     * pos — where the field starts (which bits to look at)
+     * width — how wide the field is (how many bits to keep once you're aligned)
+     */
     return (reg >> pos) & ((1u << width) - 1u);
 }
 
 uint32_t insert_field(uint32_t reg, int pos, int width, uint32_t val)
 {
+    /**
+     * Full trace:
+    reg  = 1010 1011
+    mask = 1111 0000
+    ~mask= 0000 1111
+
+    reg & ~mask   = 1010 1011 & 0000 1111 = 0000 1011   (old field erased, rest kept)
+
+    val         = 0000 0011
+    val << pos  = 0011 0000
+    & mask      = 0011 0000 & 1111 0000 = 0011 0000    (new field value, aligned & clipped)
+
+    result = (reg & ~mask) | ((val<<pos) & mask)
+        = 0000 1011 | 0011 0000
+        = 0011 1011  = 0x3B  ✓
+    That matches the test. So the whole function is the classic embedded "read-modify-write" pattern: erase the old field bits, then OR in the new value shifted and clipped to fit exactly where the field lives — leaving every other bit in reg untouched.
+     */
     uint32_t mask = ((1u << width) - 1u) << pos;
     return (reg & ~mask) | ((val << pos) & mask); /* read-modify-write */
 }
@@ -514,7 +537,13 @@ int max3(int a, int b, int c)
 /* swap without a temp -- know it, and know why not to use it */
 void swap_xor(int *a, int *b)
 {
-    if (a == b)
+    /**
+     *a ^= *b;   // a = a ^ b
+     *b ^= *a;   // b = b ^ (a ^ b) = a        (b^b cancels to 0, leaving a)
+     *a ^= *b;   // a = (a ^ b) ^ a = b        (a^a cancels to 0, leaving b)
+     */
+
+    if (a == b) // if a and b are the same memory location
         return; /* ALIASING: without this, zeroes both */
     *a ^= *b;
     *b ^= *a;
@@ -551,11 +580,13 @@ void my_itoa(int n, char *buf, size_t cap)
 
     if (u == 0)
         tmp[i++] = '0';
+
     while (u)
     {
         tmp[i++] = (char)('0' + u % 10);
         u /= 10;
     }
+
     if (neg)
         tmp[i++] = '-';
 
