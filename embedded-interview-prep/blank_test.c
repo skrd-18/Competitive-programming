@@ -5,6 +5,12 @@
 #include <stdbool.h>
 #include <stdint.h>
 
+#define BIT(N) (1UL << (N))
+#define SET_BIT(reg, N) ((reg) |= BIT(N))
+#define CLEAR_BIT(reg, N) ((reg) &= ~BIT(N))
+#define TOGGLE_BIT(reg, N) ((reg) ^= BIT(N))
+#define TEST_BIT(reg, N) (((reg) >> N) & 1UL)
+
 /*
  *   Part 1
  */
@@ -105,12 +111,11 @@ uint32_t isolate_lowest_set_bit(uint32_t x)
 uint32_t reverse_bits(uint32_t v)
 {
     uint32_t r = 0;
-    for (size_t i = 0; i < 32; i++)
+    for (uint32_t i = 0; i < 32; i += 1)
     {
-        r = (r << 1) | (v & 1u);
-        v = v >> 1;
+        r = (r << 1) | (v & 1U);
+        v >> 1;
     }
-    return r;
 }
 
 uint32_t insert_field(uint32_t reg, int pos, int width, uint32_t val)
@@ -236,6 +241,29 @@ int dedup_sorted(int *a, int n)
     return w;
 }
 
+int deduped_unsorted_stable(int *a, int n)
+{
+    size_t w = 0;
+    for (size_t r = 0; r < n; r += 1)
+    {
+        bool seen = false;
+        for (size_t k = 0; k < w; k += 1)
+        {
+            if (a[k] == a[r])
+            {
+                seen = true;
+                break;
+            }
+        }
+        if (!seen)
+        {
+            a[w] = a[r];
+            w += 1;
+        }
+    }
+    return w;
+}
+
 int popcount_kernighan(uint32_t v)
 {
     int c = 0;
@@ -245,6 +273,170 @@ int popcount_kernighan(uint32_t v)
         c += 1;
     }
     return c;
+}
+
+#define RB_SIZE 8
+#define RB_MASK (RB_SIZE - 1)
+/**
+index:   0    1    2    3    4    5    6    7
+value:   F    G    ?    A    B    C    D    E
+                   ^
+              head=2 (next write goes here — currently stale, not real data)
+                        ^
+                  tail=3 (oldest unread item, "A" — next to be popped)
+ */
+typedef struct
+{
+    uint8_t buf[RB_SIZE];
+    volatile uint16_t head;
+    volatile uint16_t tail;
+} ring_buffer_t;
+
+static void ring_buffer_init(ring_buffer_t *rb)
+{
+    rb->head = rb->tail = 0;
+}
+
+static bool rb_is_empty(const ring_buffer_t *rb)
+{
+    return rb->head == rb->tail;
+}
+static bool rb_is_full(const ring_buffer_t *rb)
+{
+    return (rb->head + 1) & RB_MASK == rb->tail;
+}
+static bool rb_push(ring_buffer_t *rb, uint8_t v) /* called from ISR */
+{
+    if (rb_is_full(rb))
+        return false;
+    rb->buf[rb->head] = v;
+    rb->head = (uint16_t)(rb->head + 1) & RB_MASK;
+    return true;
+}
+
+static bool rb_pop(ring_buffer_t *rb, uint8_t *out) /* called from main */
+{
+    if (rb_is_empty(rb))
+        return false;
+    *out = rb->buf[rb->tail];
+    rb->tail = (uint16_t)(rb->tail + 1) & RB_MASK;
+    return true;
+}
+
+void reverse_string(char *s)
+{
+    if (!s)
+        return;
+    size_t j = strlen(s);
+    size_t i = 0;
+
+    if (j == 0)
+        return;
+
+    j -= 1; // remove the null character
+
+    while (i < j)
+    {
+        char temp = s[i];
+        s[i] = s[j];
+        s[j] = temp;
+        i += 1;
+        j -= 1;
+    }
+}
+
+size_t my_strlen(const char *s)
+{
+    const char *p = s;
+    while (*p)
+        p += 1;
+    return (size_t)(p - s);
+}
+
+// Linked List
+typedef struct node
+{
+    int data;
+    struct node *next;
+} node_t;
+
+static node_t *list_push_front(node_t *head, int v)
+{
+    node_t *n = (node_t *)malloc(sizeof *n);
+    if (!n)
+    {
+        return head;
+    }
+    n->data = v;
+    n->next = head;
+    return n;
+}
+
+static void list_print(const char *label, const node_t *h)
+{
+    printf("%-20s", label);
+    for (const node_t *p = h; p; p->next)
+        printf("%d -> ", p->data);
+    puts("NULL");
+}
+
+static node_t *list_reverse(node_t *head)
+{
+    node_t *prev = NULL, *curr = head;
+    while (curr)
+    {
+        node_t *next = curr->next; /* save before we clobber it */
+        curr->next = prev;         /* flip the arrow */
+        prev = curr;               /* advance */
+        curr = next;
+    }
+    return prev; /* prev is the new head */
+}
+
+#define STACK_CAP 32
+typedef struct
+{
+    int buf[STACK_CAP];
+    int top;
+} stack_t;
+
+static void stack_init(stack_t *s)
+{
+    s->top = 0;
+}
+
+static bool stack_push(stack_t *s, int v)
+{
+    if (s->top >= STACK_CAP)
+        return false;
+    s->buf[s->top] = v;
+    s->top += 1;
+    return true;
+}
+static bool stack_pop(stack_t *s, int *out)
+{
+    if (s->top <= 0)
+        return false;
+
+    s->top -= 1;
+    *out = s->buf[s->top];
+}
+
+int binary_search(int *a, int target, int n)
+{
+    int lo = 0;
+    int hi = n - 1;
+    while (lo <= hi)
+    {
+        int mid = lo + ((hi - lo) / 2);
+        if (a[mid] == target)
+            return mid;
+        if (a[mid] < target)
+            lo = mid + 1;
+        else
+            hi = mid - 1;
+    }
+    return -1;
 }
 
 int main(int argc, char const *argv[])
@@ -273,5 +465,38 @@ int main(int argc, char const *argv[])
     printf("pyramid = \n");
     pyramid_stars(5);
 
+    int arr[3] = {5, 1, 5};
+    printf("deduped unsorted stable = %d\n", deduped_unsorted_stable(arr, 3));
+
+    /**
+     * Ring buffer
+     */
+    ring_buffer_t rb;
+    ring_buffer_init(&rb);
+    rb_push(&rb, 99);
+    uint8_t v = 0;
+    rb_pop(&rb, &v);
+    printf("%u is popped value \n", v);
+
+    /**
+     * My implementation of string length
+     */
+
+    const char *s = "Hello";
+    printf("mystrlen = %zu \n", my_strlen(s));
+
+    /**
+     *
+     * Stack / Queue
+     */
+    stack_t test;
+    stack_init(&test);
+    printf("top is %d\n", test.top);
+
+    /**
+     * Binary Search
+     */
+    int array[5] = {5, 3, 4, 6, 2};
+    printf("Binary search is %d\n", binary_search(array, 3, 5));
     return 0;
 }
