@@ -1,1 +1,1 @@
-/usr/bin/g++ -g CMakeFiles/main.dir/kattis/rankproblem/main.cpp.o -o main 
+/usr/bin/gcc -g CMakeFiles/main.dir/leetcode/0191/main.c.o -o main 

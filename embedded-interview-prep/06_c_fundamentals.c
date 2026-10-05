@@ -697,6 +697,7 @@ int main(void)
         CHECK("swap_xor b", b, 3);
     }
     {
+        // local scope
         int a = 5;
         swap_xor(&a, &a);
         CHECK("swap_xor aliased", a, 5);

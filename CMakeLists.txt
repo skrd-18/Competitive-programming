@@ -23,7 +23,7 @@ endif()
 # 4. DEFINE YOUR EXECUTABLE
 # Replace 'main.cpp' with your actual filename (e.g., 'RGB.cpp' for Lab 0)
 add_executable(main
-  kattis/rankproblem/main.cpp)
+  leetcode/0191/main.c)
 
 # 5. UNIT TESTING (Optional but common in CS2040C)
 # If your lab includes a separate test file (e.g., RGB_test.cpp)

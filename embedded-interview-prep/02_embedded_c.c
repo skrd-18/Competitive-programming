@@ -363,12 +363,8 @@ void *my_memmove(void *dst, const void *src, size_t n)
  *   const char * const p;  -> both fixed.
 
 
-
  * const char *p — "pointer to const char." p can be reassigned to point anywhere (p = other; is fine), but you cannot write through it: *p = 'x'; is a compile error.
  * char *const p — "const pointer to char." p itself is locked to one address forever (p = other; is a compile error), but you can freely modify the data it points to:     *p = 'x'; is fine.
-
-
-
 
  * READ IT RIGHT-TO-LEFT from the identifier. Say that rule out loud.
  *

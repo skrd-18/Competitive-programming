@@ -108,14 +108,21 @@ uint32_t isolate_lowest_set_bit(uint32_t x)
     return x & -x;
 }
 
-uint32_t reverse_bits(uint32_t v)
+uint8_t reverse_bits(uint8_t v)
 {
-    uint32_t r = 0;
-    for (uint32_t i = 0; i < 32; i += 1)
+    uint8_t r = 0;
+    for (size_t i = 0; i < 8; i += 1)
     {
         r = (r << 1) | (v & 1U);
-        v >> 1;
+        v = v >> 1;
     }
+    return r;
+}
+
+void print_binary(uint8_t v, int width)
+{
+    for (int i = width - 1; i >= 0; i--)
+        putchar((v >> i) & 1 ? '1' : '0');
 }
 
 uint32_t insert_field(uint32_t reg, int pos, int width, uint32_t val)
@@ -216,13 +223,6 @@ void pyramid_char_array(int rows)
     }
     free(line);
 }
-
-typedef struct
-{
-    uint8_t pos;
-    uint32_t bit_pos;
-    uint32_t bit_size;
-} bitstream;
 
 int dedup_sorted(int *a, int n)
 {
@@ -420,6 +420,7 @@ static bool stack_pop(stack_t *s, int *out)
 
     s->top -= 1;
     *out = s->buf[s->top];
+    return true;
 }
 
 int binary_search(int *a, int target, int n)
@@ -498,5 +499,15 @@ int main(int argc, char const *argv[])
      */
     int array[5] = {5, 3, 4, 6, 2};
     printf("Binary search is %d\n", binary_search(array, 3, 5));
+
+    /**
+     * Reverse bits
+     */
+    printf("Reverse bits-> Original: ");
+    print_binary((uint32_t)'T', 8);
+    printf(", Reversed: ");
+    print_binary(reverse_bits('T'), 8);
+    printf("\n");
+
     return 0;
 }
