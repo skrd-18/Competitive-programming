@@ -8,7 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/home/shiva/Projects/Competitive-programming/leetcode/0191/main.c" "CMakeFiles/main.dir/leetcode/0191/main.c.o" "gcc" "CMakeFiles/main.dir/leetcode/0191/main.c.o.d"
+  "/home/shiva/Projects/Competitive-programming/leetcode/0020/main.c" "CMakeFiles/main.dir/leetcode/0020/main.c.o" "gcc" "CMakeFiles/main.dir/leetcode/0020/main.c.o.d"
   )
 
 # Targets to which this target links which contain Fortran sources.

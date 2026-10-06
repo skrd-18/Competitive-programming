@@ -69,28 +69,28 @@ include CMakeFiles/main.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/main.dir/flags.make
 
-CMakeFiles/main.dir/leetcode/0191/main.c.o: CMakeFiles/main.dir/flags.make
-CMakeFiles/main.dir/leetcode/0191/main.c.o: /home/shiva/Projects/Competitive-programming/leetcode/0191/main.c
-CMakeFiles/main.dir/leetcode/0191/main.c.o: CMakeFiles/main.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/shiva/Projects/Competitive-programming/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/main.dir/leetcode/0191/main.c.o"
-	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/main.dir/leetcode/0191/main.c.o -MF CMakeFiles/main.dir/leetcode/0191/main.c.o.d -o CMakeFiles/main.dir/leetcode/0191/main.c.o -c /home/shiva/Projects/Competitive-programming/leetcode/0191/main.c
+CMakeFiles/main.dir/leetcode/0020/main.c.o: CMakeFiles/main.dir/flags.make
+CMakeFiles/main.dir/leetcode/0020/main.c.o: /home/shiva/Projects/Competitive-programming/leetcode/0020/main.c
+CMakeFiles/main.dir/leetcode/0020/main.c.o: CMakeFiles/main.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/shiva/Projects/Competitive-programming/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/main.dir/leetcode/0020/main.c.o"
+	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/main.dir/leetcode/0020/main.c.o -MF CMakeFiles/main.dir/leetcode/0020/main.c.o.d -o CMakeFiles/main.dir/leetcode/0020/main.c.o -c /home/shiva/Projects/Competitive-programming/leetcode/0020/main.c
 
-CMakeFiles/main.dir/leetcode/0191/main.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/main.dir/leetcode/0191/main.c.i"
-	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/shiva/Projects/Competitive-programming/leetcode/0191/main.c > CMakeFiles/main.dir/leetcode/0191/main.c.i
+CMakeFiles/main.dir/leetcode/0020/main.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/main.dir/leetcode/0020/main.c.i"
+	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/shiva/Projects/Competitive-programming/leetcode/0020/main.c > CMakeFiles/main.dir/leetcode/0020/main.c.i
 
-CMakeFiles/main.dir/leetcode/0191/main.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/main.dir/leetcode/0191/main.c.s"
-	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/shiva/Projects/Competitive-programming/leetcode/0191/main.c -o CMakeFiles/main.dir/leetcode/0191/main.c.s
+CMakeFiles/main.dir/leetcode/0020/main.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/main.dir/leetcode/0020/main.c.s"
+	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/shiva/Projects/Competitive-programming/leetcode/0020/main.c -o CMakeFiles/main.dir/leetcode/0020/main.c.s
 
 # Object files for target main
 main_OBJECTS = \
-"CMakeFiles/main.dir/leetcode/0191/main.c.o"
+"CMakeFiles/main.dir/leetcode/0020/main.c.o"
 
 # External object files for target main
 main_EXTERNAL_OBJECTS =
 
-main: CMakeFiles/main.dir/leetcode/0191/main.c.o
+main: CMakeFiles/main.dir/leetcode/0020/main.c.o
 main: CMakeFiles/main.dir/build.make
 main: CMakeFiles/main.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/shiva/Projects/Competitive-programming/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking C executable main"

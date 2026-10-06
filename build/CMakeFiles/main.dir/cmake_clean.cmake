@@ -1,6 +1,6 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/main.dir/leetcode/0191/main.c.o"
-  "CMakeFiles/main.dir/leetcode/0191/main.c.o.d"
+  "CMakeFiles/main.dir/leetcode/0020/main.c.o"
+  "CMakeFiles/main.dir/leetcode/0020/main.c.o.d"
   "main"
   "main.pdb"
 )

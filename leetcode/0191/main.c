@@ -16,3 +16,9 @@ int hammingWeight(int n)
     }
     return count;
 }
+
+int main(int argc, char const *argv[])
+{
+
+    return 0;
+}
