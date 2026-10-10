@@ -1,1 +1,1 @@
-/usr/bin/gcc -g CMakeFiles/main.dir/leetcode/0020/main.c.o -o main 
+/usr/bin/gcc -g CMakeFiles/main.dir/leetcode/0155/main.c.o -o main 

@@ -1,8 +1,8 @@
 [
 {
   "directory": "/home/shiva/Projects/Competitive-programming/build",
-  "command": "/usr/bin/gcc   -g -Wall -Wextra -Wpedantic -g -o CMakeFiles/main.dir/leetcode/0020/main.c.o -c /home/shiva/Projects/Competitive-programming/leetcode/0020/main.c",
-  "file": "/home/shiva/Projects/Competitive-programming/leetcode/0020/main.c",
-  "output": "CMakeFiles/main.dir/leetcode/0020/main.c.o"
+  "command": "/usr/bin/gcc   -g -Wall -Wextra -Wpedantic -g -o CMakeFiles/main.dir/leetcode/0155/main.c.o -c /home/shiva/Projects/Competitive-programming/leetcode/0155/main.c",
+  "file": "/home/shiva/Projects/Competitive-programming/leetcode/0155/main.c",
+  "output": "CMakeFiles/main.dir/leetcode/0155/main.c.o"
 }
 ]
